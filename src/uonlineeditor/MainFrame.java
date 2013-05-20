@@ -1,18 +1,18 @@
 package uonlineeditor;
 
-import java.awt.Component;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.table.AbstractTableModel;
 
 /**
  *
  * @author m1kc
  */
-public class MainFrame extends javax.swing.JFrame
-{
+public class MainFrame extends javax.swing.JFrame {
+
+	Areas areas;
+	Locations locations;
     /**
      * Creates new form MainFrame
      */
@@ -20,13 +20,7 @@ public class MainFrame extends javax.swing.JFrame
     {
 		try {
 			javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException ex) {
-			Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (InstantiationException ex) {
-			Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IllegalAccessException ex) {
-			Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (UnsupportedLookAndFeelException ex) {
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
 			Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		initComponents();
@@ -84,13 +78,10 @@ public class MainFrame extends javax.swing.JFrame
 
       jTable2.setModel(new javax.swing.table.DefaultTableModel(
          new Object [][] {
-            {null, null},
-            {null, null},
-            {null, null},
-            {null, null}
+
          },
          new String [] {
-            "Name", "id"
+
          }
       ));
       jScrollPane4.setViewportView(jTable2);
@@ -290,26 +281,9 @@ public class MainFrame extends javax.swing.JFrame
    }// </editor-fold>//GEN-END:initComponents
 
    private void LoadAreas(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoadAreas
-			AreasFile dataFile = new AreasFile();
-			jTable2.add(new Component() {});
-			AbstractTableModel at = new AbstractTableModel() {
-
-			@Override
-			public int getRowCount() {
-				throw new UnsupportedOperationException("Not supported yet.");
-			}
-
-			@Override
-			public int getColumnCount() {
-				throw new UnsupportedOperationException("Not supported yet.");
-			}
-
-			@Override
-			public Object getValueAt(int rowIndex, int columnIndex) {
-				throw new UnsupportedOperationException("Not supported yet.");
-			}
-		};
-//			at.
+			AreasFile areasFile = new AreasFile();
+			areas = areasFile.getAreas();
+			jTable2.setModel(areas);
    }//GEN-LAST:event_LoadAreas
 
     /**
