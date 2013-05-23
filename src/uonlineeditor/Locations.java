@@ -16,10 +16,9 @@ public class Locations extends DefaultTableModel {
 
 	public ArrayList<Location> locs = new ArrayList<>();
 	private Set<TableModelListener> listeners = new HashSet<>();
-//	private ArrayList<Area> areas = new ArrayList<>();
 
 	Locations (List<String[]> locs) {
-		System.out.println("Locations constructor");
+		//System.out.println("Locations constructor");
 		for (Iterator<String[]> it = locs.iterator(); it.hasNext();) {
 			this.locs.add(new Location(it.next()));
 		}

@@ -71,8 +71,18 @@ public class MainFrame extends javax.swing.JFrame {
       setPreferredSize(new java.awt.Dimension(661, 600));
 
       jButton1.setText("Add");
+      jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+         public void mouseClicked(java.awt.event.MouseEvent evt) {
+            AddNewArea(evt);
+         }
+      });
 
       jButton2.setText("Remove");
+      jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+         public void mouseClicked(java.awt.event.MouseEvent evt) {
+            RemoveArea(evt);
+         }
+      });
 
       jButton3.setText("Rename");
 
@@ -285,16 +295,26 @@ public class MainFrame extends javax.swing.JFrame {
    }// </editor-fold>//GEN-END:initComponents
 
    private void LoadAreas(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoadAreas
-			AreasFile areasFile = new AreasFile();
-			areas = areasFile.getAreas();
-			jTable2.setModel(areas);
+		AreasFile areasFile = new AreasFile();
+		areas = areasFile.getAreas();
+		jTable2.setModel(areas);
    }//GEN-LAST:event_LoadAreas
 
    private void LoadLocations(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoadLocations
-			LocationsFile locationsFile = new LocationsFile();
-			locations = locationsFile.getLocations();
-			jTable1.setModel(locations);
+		LocationsFile locationsFile = new LocationsFile();
+		locations = locationsFile.getLocations();
+		jTable1.setModel(locations);
    }//GEN-LAST:event_LoadLocations
+
+   private void AddNewArea(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddNewArea
+		areas.addNewArea(jTable2.getSelectedRow());
+		jTable2.updateUI();
+   }//GEN-LAST:event_AddNewArea
+
+   private void RemoveArea(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RemoveArea
+		areas.removeArea(jTable2.getSelectedRow());
+		jTable2.updateUI();
+   }//GEN-LAST:event_RemoveArea
 
     /**
      * @param args the command line arguments

@@ -15,7 +15,7 @@ public class Location {
 	public int Default;
 
 	Location(String[] data) {
-		System.out.println("Location constructor");
+		//System.out.println("Location constructor");
 		setParameters(data);
 	}
 

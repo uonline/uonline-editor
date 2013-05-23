@@ -24,7 +24,7 @@ public abstract class CommFile {
 	protected CSVWriter csvWriter;
 
 	public CommFile() {
-		System.out.println("CommFile constructor");
+		//System.out.println("CommFile constructor");
 		fc = new JFileChooser();
 		fc.setFileFilter(getFileFilter());
 		int ret = fc.showDialog(null, "Открыть файл");

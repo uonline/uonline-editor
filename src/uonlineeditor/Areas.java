@@ -16,12 +16,30 @@ public class Areas extends DefaultTableModel {
 
 	private Set<TableModelListener> listeners = new HashSet<>();
 	private ArrayList<Area> areas = new ArrayList<>();
+	private int lastId = 0;
 
 	Areas (List<String[]> areas) {
-		System.out.println("Areas constructor");
+		//System.out.println("Areas constructor");
 		for (Iterator<String[]> it = areas.iterator(); it.hasNext();) {
 			this.areas.add(new Area(it.next()));
 		}
+	}
+
+	void addNewArea() {
+		areas.add(new Area(lastId));
+	}
+
+	void addNewArea(int index) {
+		if (areas.size() == index + 1) {
+			addNewArea();
+		}
+		else {
+			areas.add(index + 1, new Area(lastId));
+		}
+	}
+
+	void removeArea(int index) {
+		areas.remove(index);
 	}
 
 	public void addTableModelListener(TableModelListener listener) {
@@ -52,15 +70,7 @@ public class Areas extends DefaultTableModel {
 	}
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		Area area = areas.get(rowIndex);
-		switch (columnIndex) {
-			case 0:
-				return area.title;
-			case 1:
-				return area.id;
-			default:
-				return "";
-		}
+		return areas.get(rowIndex).getParameter(columnIndex);
 	}
 
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -72,15 +82,7 @@ public class Areas extends DefaultTableModel {
 	}
 
 	public void setValueAt(Object value, int rowIndex, int columnIndex) {
-		switch (columnIndex) {
-			case 0:
-				areas.get(rowIndex).title = value.toString();
-				break;
-			case 1:
-				areas.get(rowIndex).id = Integer.parseInt(value.toString());
-				break;
-			default:
-		}
+		areas.get(rowIndex).setParameter(value, columnIndex);
 	}
 
 }
