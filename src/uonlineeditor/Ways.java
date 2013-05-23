@@ -4,7 +4,7 @@ package uonlineeditor;
  *
  * @author houjing
  */
-class Ways {
+public class Ways {
 
 	public Way wlist[];
 
@@ -16,7 +16,7 @@ class Ways {
 		}
 	}
 
-	public String AsData() {
+	public String toString() {
 		String[] t = new String[wlist.length];
 		for (int i = 0; i < wlist.length; i++) {
 			t[i] = wlist[i].AsData();

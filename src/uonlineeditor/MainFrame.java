@@ -7,7 +7,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
- * @author m1kc
+ * @author m1kc, houjing
  */
 public class MainFrame extends javax.swing.JFrame {
 
@@ -237,7 +237,11 @@ public class MainFrame extends javax.swing.JFrame {
       });
 
       jButton5.setText("Load locations");
-      jButton5.setEnabled(false);
+      jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+         public void mouseClicked(java.awt.event.MouseEvent evt) {
+            LoadLocations(evt);
+         }
+      });
 
       jButton8.setText("Save areas");
       jButton8.setEnabled(false);
@@ -285,6 +289,12 @@ public class MainFrame extends javax.swing.JFrame {
 			areas = areasFile.getAreas();
 			jTable2.setModel(areas);
    }//GEN-LAST:event_LoadAreas
+
+   private void LoadLocations(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoadLocations
+			LocationsFile locationsFile = new LocationsFile();
+			locations = locationsFile.getLocations();
+			jTable1.setModel(locations);
+   }//GEN-LAST:event_LoadLocations
 
     /**
      * @param args the command line arguments

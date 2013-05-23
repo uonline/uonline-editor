@@ -17,7 +17,7 @@ public class Areas extends DefaultTableModel {
 	private Set<TableModelListener> listeners = new HashSet<>();
 	private ArrayList<Area> areas = new ArrayList<>();
 
-	public Areas(List<String[]> areas) {
+	Areas (List<String[]> areas) {
 		System.out.println("Areas constructor");
 		for (Iterator<String[]> it = areas.iterator(); it.hasNext();) {
 			this.areas.add(new Area(it.next()));
@@ -58,8 +58,9 @@ public class Areas extends DefaultTableModel {
 				return area.title;
 			case 1:
 				return area.id;
+			default:
+				return "";
 		}
-	return "";
 	}
 
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
