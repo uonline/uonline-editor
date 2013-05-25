@@ -67,7 +67,7 @@ public class MainFrame extends javax.swing.JFrame {
       jButton9 = new javax.swing.JButton();
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-      setTitle("Uonline Editor");
+      setTitle("uonline Editor");
       setPreferredSize(new java.awt.Dimension(661, 600));
 
       jButton1.setText("Add");
