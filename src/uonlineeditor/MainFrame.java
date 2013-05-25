@@ -312,7 +312,8 @@ public class MainFrame extends javax.swing.JFrame {
    }//GEN-LAST:event_AddNewArea
 
    private void RemoveArea(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RemoveArea
-		areas.removeArea(jTable2.getSelectedRow());
+		int sel = areas.removeAreas(jTable2.getSelectedRows());
+		jTable2.setRowSelectionInterval(sel, sel);
 		jTable2.updateUI();
    }//GEN-LAST:event_RemoveArea
 

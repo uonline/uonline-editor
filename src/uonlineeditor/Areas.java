@@ -14,9 +14,6 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Areas extends DefaultTableModel {
 
-	private Set<TableModelListener> listeners = new HashSet<>();
-	private ArrayList<Area> areas = new ArrayList<>();
-	private int lastId = 0;
 
 	Areas (List<String[]> areas) {
 		//System.out.println("Areas constructor");
@@ -42,8 +39,12 @@ public class Areas extends DefaultTableModel {
 		areas.remove(index);
 	}
 
-	public void addTableModelListener(TableModelListener listener) {
-		listeners.add(listener);
+	int removeAreas(int[] index) {
+		if (this.getRowCount() == 1) return 0;
+		for (int i = index.length - 1; i >= 0 ; i--) {
+			this.removeArea(index[i]);
+		}
+		return 0 > index[0] - 1 ? 0 : index[0] - 1;
 	}
 
 	public Class<?> getColumnClass(int columnIndex) {
@@ -77,6 +78,10 @@ public class Areas extends DefaultTableModel {
 		return true;
 	}
 
+	public void addTableModelListener(TableModelListener listener) {
+		listeners.add(listener);
+	}
+
 	public void removeTableModelListener(TableModelListener listener) {
 		listeners.remove(listener);
 	}
@@ -84,5 +89,9 @@ public class Areas extends DefaultTableModel {
 	public void setValueAt(Object value, int rowIndex, int columnIndex) {
 		areas.get(rowIndex).setParameter(value, columnIndex);
 	}
+
+	private Set<TableModelListener> listeners = new HashSet<>();
+	private ArrayList<Area> areas = new ArrayList<>();
+	private int lastId = 0;
 
 }
