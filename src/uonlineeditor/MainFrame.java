@@ -67,7 +67,7 @@ public class MainFrame extends javax.swing.JFrame {
       jButton9 = new javax.swing.JButton();
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-      setTitle("uonline Editor");
+      setTitle("Uonline Editor");
       setPreferredSize(new java.awt.Dimension(661, 600));
 
       jButton1.setText("Add");
@@ -307,8 +307,18 @@ public class MainFrame extends javax.swing.JFrame {
    }//GEN-LAST:event_LoadLocations
 
    private void AddNewArea(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddNewArea
-		areas.addNewArea(jTable2.getSelectedRow());
-		jTable2.updateUI();
+		if (areas == null) {
+			areas = new Areas();
+			jTable2.setModel(areas);
+			int sel = areas.addNewArea(jTable2.getSelectedRow());
+			jTable2.setRowSelectionInterval(sel, sel);
+			jTable2.updateUI();
+		}
+		else {
+			int sel = areas.addNewArea(jTable2.getSelectedRow());
+			jTable2.setRowSelectionInterval(sel, sel);
+			jTable2.updateUI();
+		}
    }//GEN-LAST:event_AddNewArea
 
    private void RemoveArea(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RemoveArea

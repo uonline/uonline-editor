@@ -14,24 +14,29 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Areas extends DefaultTableModel {
 
+	Areas() {}
 
 	Areas (List<String[]> areas) {
 		//System.out.println("Areas constructor");
 		for (Iterator<String[]> it = areas.iterator(); it.hasNext();) {
-			this.areas.add(new Area(it.next()));
+			Area ar = new Area(it.next());
+			lastId = lastId > ar.id ? lastId : ar.id;
+			this.areas.add(ar);
 		}
 	}
 
-	void addNewArea() {
-		areas.add(new Area(lastId));
-	}
-
-	void addNewArea(int index) {
-		if (areas.size() == index + 1) {
-			addNewArea();
+	int addNewArea(int index) {
+		if (index == -1) {
+			areas.add(new Area(++lastId));
+			return 0;
+		}
+		else if (areas.size() == index + 1) {
+			areas.add(new Area(++lastId));
+			return areas.size()-1;
 		}
 		else {
-			areas.add(index + 1, new Area(lastId));
+			areas.add(index + 1, new Area(++lastId));
+			return  index + 1;
 		}
 	}
 
@@ -44,7 +49,7 @@ public class Areas extends DefaultTableModel {
 		for (int i = index.length - 1; i >= 0 ; i--) {
 			this.removeArea(index[i]);
 		}
-		return 0 > index[0] - 1 ? 0 : index[0] - 1;
+		return index[index.length-1] == areas.size() + 1 - index.length ? areas.size() - 1 : index[0];
 	}
 
 	public Class<?> getColumnClass(int columnIndex) {
