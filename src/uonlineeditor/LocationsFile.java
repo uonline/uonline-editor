@@ -13,6 +13,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class LocationsFile extends CommFile {
 
+	public LocationsFile(int mode) {
+		super(mode);
+	}
+
 	public FileNameExtensionFilter getFileFilter() {
 		return new FileNameExtensionFilter("База данных локаций (*.uolb)", "uolb");
 }

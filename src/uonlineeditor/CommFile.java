@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.util.regex.*;
 
 /**
  *
@@ -20,15 +21,35 @@ public abstract class CommFile {
 
 	private JFileChooser fc;
 	protected File file;
+	public boolean approved = false;
+	public static int OPEN = 0;
+	public static int SAVE = 1;
 
-	public CommFile() {
-		//System.out.println("CommFile constructor");
+	public CommFile(int mode) {
+		int ret;
 		fc = new JFileChooser();
-		fc.setFileFilter(getFileFilter());
-		int ret = fc.showDialog(null, "Открыть файл");
+
+		if (mode == OPEN) {
+			System.out.println("open for");
+			fc.setDialogType(JFileChooser.OPEN_DIALOG);
+			fc.setFileFilter(getFileFilter());
+			ret = fc.showDialog(null, null);
+		}
+		else if (mode == SAVE) {
+			System.out.println("saving for");
+			fc.setDialogType(JFileChooser.SAVE_DIALOG);
+			fc.setFileFilter(getFileFilter());
+			ret = fc.showDialog(null, null);
+		}
+		else ret = JFileChooser.CANCEL_OPTION;
+
 		if (ret == JFileChooser.APPROVE_OPTION) {
 			file = fc.getSelectedFile();
+			String ext = ((FileNameExtensionFilter) fc.getFileFilter()).getExtensions()[0];
+			if (!Pattern.compile("\\."+ext+"$").matcher(file.getName()).matches()) file = new File(file.getAbsolutePath() + "." + ext);
+			approved = true;
 		}
+		else approved = false;
 	}
 
 	protected CSVReader getCsvReader() {

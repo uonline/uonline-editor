@@ -300,14 +300,16 @@ public class MainFrame extends javax.swing.JFrame {
    }// </editor-fold>//GEN-END:initComponents
 
    private void LoadAreas(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoadAreas
-		areasFile = new AreasFile();
+		AreasFile af = new AreasFile(CommFile.OPEN);
+		if (!af.approved) return;
+		areasFile = af;
 		areas = areasFile.getAreas();
 		AreasTable.setModel(areas);
 		SaveAreasButton.setEnabled(true);
    }//GEN-LAST:event_LoadAreas
 
    private void LoadLocations(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoadLocations
-		LocationsFile locationsFile = new LocationsFile();
+		LocationsFile locationsFile = new LocationsFile(CommFile.OPEN);
 		locations = locationsFile.getLocations();
 		jTable1.setModel(locations);
    }//GEN-LAST:event_LoadLocations
@@ -330,6 +332,13 @@ public class MainFrame extends javax.swing.JFrame {
    }//GEN-LAST:event_RemoveArea
 
    private void SaveAreas(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveAreas
+		AreasFile af;
+		if (areasFile == null) {
+			System.out.println("areasFile is null");
+			af = new AreasFile(CommFile.SAVE);
+			if (!af.approved) return;
+			areasFile = af;
+		}
 		areasFile.writeAreas(areas);
    }//GEN-LAST:event_SaveAreas
 

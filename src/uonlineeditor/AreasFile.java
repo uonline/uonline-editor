@@ -16,7 +16,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class AreasFile extends CommFile {
 
-	public AreasFile() {
+	public AreasFile(int mode) {
+		super(mode);
 		//System.out.println("AreasFile constructor");
 	}
 
