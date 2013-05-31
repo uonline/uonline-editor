@@ -25,10 +25,14 @@ public class AreasFile extends CommFile {
 	Areas getAreas() {
 		List<String[]> csvAreas = null;
 		try {
-			csvAreas = csvReader.readAll();
+			csvAreas = getCsvReader().readAll();
 		} catch (IOException ex) {
 			Logger.getLogger(AreasFile.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return new Areas(csvAreas);
+	}
+
+	void writeAreas(Areas areas) {
+		getCsvWriter().writeAll(areas.asData());
 	}
 }

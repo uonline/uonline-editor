@@ -1,13 +1,16 @@
 package uonlineeditor;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author houjing
  */
 public class Area {
 
-	public String title;
-	public int id;
+	private String title;
+	private int id;
+	private Locations locs = new Locations();
 
 	Area (int lastId) {
 		title = "";
@@ -18,6 +21,11 @@ public class Area {
 		//System.out.println("Area constructor");
 		title = data[0];
 		id = Integer.parseInt(data[1]);
+	}
+
+	String[] asData() {
+		String[] data = {title, String.valueOf(id)};
+		return data;
 	}
 
 	Object getParameter(int columnIndex) {
@@ -42,4 +50,5 @@ public class Area {
 			default:
 		}
 	}
+
 }

@@ -13,6 +13,7 @@ public class MainFrame extends javax.swing.JFrame {
 
 	Areas areas;
 	Locations locations;
+	AreasFile areasFile;
     /**
      * Creates new form MainFrame
      */
@@ -44,7 +45,7 @@ public class MainFrame extends javax.swing.JFrame {
       jButton2 = new javax.swing.JButton();
       jButton3 = new javax.swing.JButton();
       jScrollPane4 = new javax.swing.JScrollPane();
-      jTable2 = new javax.swing.JTable();
+      AreasTable = new javax.swing.JTable();
       jPanel2 = new javax.swing.JPanel();
       jComboBox1 = new javax.swing.JComboBox();
       jLabel1 = new javax.swing.JLabel();
@@ -63,12 +64,11 @@ public class MainFrame extends javax.swing.JFrame {
       jButton7 = new javax.swing.JButton();
       jButton4 = new javax.swing.JButton();
       jButton5 = new javax.swing.JButton();
-      jButton8 = new javax.swing.JButton();
+      SaveAreasButton = new javax.swing.JButton();
       jButton9 = new javax.swing.JButton();
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
       setTitle("Uonline Editor");
-      setPreferredSize(new java.awt.Dimension(661, 600));
 
       jButton1.setText("Add");
       jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -86,7 +86,7 @@ public class MainFrame extends javax.swing.JFrame {
 
       jButton3.setText("Rename");
 
-      jTable2.setModel(new javax.swing.table.DefaultTableModel(
+      AreasTable.setModel(new javax.swing.table.DefaultTableModel(
          new Object [][] {
 
          },
@@ -94,7 +94,7 @@ public class MainFrame extends javax.swing.JFrame {
 
          }
       ));
-      jScrollPane4.setViewportView(jTable2);
+      jScrollPane4.setViewportView(AreasTable);
 
       javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
       jPanel1.setLayout(jPanel1Layout);
@@ -253,8 +253,13 @@ public class MainFrame extends javax.swing.JFrame {
          }
       });
 
-      jButton8.setText("Save areas");
-      jButton8.setEnabled(false);
+      SaveAreasButton.setText("Save areas");
+      SaveAreasButton.setEnabled(false);
+      SaveAreasButton.addMouseListener(new java.awt.event.MouseAdapter() {
+         public void mouseClicked(java.awt.event.MouseEvent evt) {
+            SaveAreas(evt);
+         }
+      });
 
       jButton9.setText("Save locations");
       jButton9.setEnabled(false);
@@ -272,7 +277,7 @@ public class MainFrame extends javax.swing.JFrame {
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                   .addComponent(jButton5)
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(jButton8)
+                  .addComponent(SaveAreasButton)
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                   .addComponent(jButton9)))
             .addContainerGap())
@@ -284,7 +289,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                .addComponent(jButton4)
                .addComponent(jButton5)
-               .addComponent(jButton8)
+               .addComponent(SaveAreasButton)
                .addComponent(jButton9))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(jTabbedPane1)
@@ -295,9 +300,10 @@ public class MainFrame extends javax.swing.JFrame {
    }// </editor-fold>//GEN-END:initComponents
 
    private void LoadAreas(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoadAreas
-		AreasFile areasFile = new AreasFile();
+		areasFile = new AreasFile();
 		areas = areasFile.getAreas();
-		jTable2.setModel(areas);
+		AreasTable.setModel(areas);
+		SaveAreasButton.setEnabled(true);
    }//GEN-LAST:event_LoadAreas
 
    private void LoadLocations(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoadLocations
@@ -309,23 +315,23 @@ public class MainFrame extends javax.swing.JFrame {
    private void AddNewArea(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddNewArea
 		if (areas == null) {
 			areas = new Areas();
-			jTable2.setModel(areas);
-			int sel = areas.addNewArea(jTable2.getSelectedRow());
-			jTable2.setRowSelectionInterval(sel, sel);
-			jTable2.updateUI();
+			AreasTable.setModel(areas);
+			SaveAreasButton.setEnabled(true);
 		}
-		else {
-			int sel = areas.addNewArea(jTable2.getSelectedRow());
-			jTable2.setRowSelectionInterval(sel, sel);
-			jTable2.updateUI();
-		}
+		int sel = areas.addNewArea(AreasTable.getSelectedRow());
+		AreasTable.setRowSelectionInterval(sel, sel);
+		AreasTable.updateUI();
    }//GEN-LAST:event_AddNewArea
 
    private void RemoveArea(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RemoveArea
-		int sel = areas.removeAreas(jTable2.getSelectedRows());
-		jTable2.setRowSelectionInterval(sel, sel);
-		jTable2.updateUI();
+		int sel = areas.removeAreas(AreasTable.getSelectedRows());
+		AreasTable.setRowSelectionInterval(sel, sel);
+		AreasTable.updateUI();
    }//GEN-LAST:event_RemoveArea
+
+   private void SaveAreas(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveAreas
+      areasFile.writeAreas(areas);
+   }//GEN-LAST:event_SaveAreas
 
     /**
      * @param args the command line arguments
@@ -376,6 +382,8 @@ public class MainFrame extends javax.swing.JFrame {
         });
     }
    // Variables declaration - do not modify//GEN-BEGIN:variables
+   private javax.swing.JTable AreasTable;
+   private javax.swing.JButton SaveAreasButton;
    private javax.swing.JButton jButton1;
    private javax.swing.JButton jButton2;
    private javax.swing.JButton jButton3;
@@ -383,7 +391,6 @@ public class MainFrame extends javax.swing.JFrame {
    private javax.swing.JButton jButton5;
    private javax.swing.JButton jButton6;
    private javax.swing.JButton jButton7;
-   private javax.swing.JButton jButton8;
    private javax.swing.JButton jButton9;
    private javax.swing.JComboBox jComboBox1;
    private javax.swing.JComboBox jComboBox2;
@@ -399,7 +406,6 @@ public class MainFrame extends javax.swing.JFrame {
    private javax.swing.JScrollPane jScrollPane4;
    private javax.swing.JTabbedPane jTabbedPane1;
    private javax.swing.JTable jTable1;
-   private javax.swing.JTable jTable2;
    private javax.swing.JTextArea jTextArea1;
    private javax.swing.JTextField jTextField1;
    private javax.swing.JTextField jTextField2;

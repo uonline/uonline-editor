@@ -1,5 +1,6 @@
 package uonlineeditor;
 
+import au.com.bytecode.opencsv.CSVReader;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,7 +20,9 @@ public class LocationsFile extends CommFile {
 	Locations getLocations() {
 		List<String[]> csvLocations = null;
 		try {
-			csvLocations = csvReader.readAll();
+			CSVReader cr = getCsvReader();
+			csvLocations = cr.readAll();
+			cr.close();
 		} catch (IOException ex) {
 			Logger.getLogger(AreasFile.class.getName()).log(Level.SEVERE, null, ex);
 		}

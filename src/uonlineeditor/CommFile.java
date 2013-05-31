@@ -20,8 +20,6 @@ public abstract class CommFile {
 
 	private JFileChooser fc;
 	protected File file;
-	protected CSVReader csvReader;
-	protected CSVWriter csvWriter;
 
 	public CommFile() {
 		//System.out.println("CommFile constructor");
@@ -31,11 +29,9 @@ public abstract class CommFile {
 		if (ret == JFileChooser.APPROVE_OPTION) {
 			file = fc.getSelectedFile();
 		}
-		csvReader = getCsvReader();
-		//csvWriter = getCsvWriter();
 	}
 
-	private CSVReader getCsvReader() {
+	protected CSVReader getCsvReader() {
 		CSVReader cr = null;
 		try {
 			System.out.println(file);
@@ -45,7 +41,7 @@ public abstract class CommFile {
 		return cr;
 	}
 
-	private CSVWriter getCsvWriter() {
+	protected CSVWriter getCsvWriter() {
 		CSVWriter cw = null;
 		try {
 			cw = new CSVWriter(new FileWriter(file));
