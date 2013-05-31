@@ -46,7 +46,7 @@ public abstract class CommFile {
 		if (ret == JFileChooser.APPROVE_OPTION) {
 			file = fc.getSelectedFile();
 			String ext = ((FileNameExtensionFilter) fc.getFileFilter()).getExtensions()[0];
-			if (!Pattern.compile("\\."+ext+"$").matcher(file.getName()).matches()) file = new File(file.getAbsolutePath() + "." + ext);
+			if (!Pattern.compile(".+\\."+ext+"$").matcher(file.getAbsolutePath()).matches()) file = new File(file.getAbsolutePath() + "." + ext);
 			approved = true;
 		}
 		else approved = false;
