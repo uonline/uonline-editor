@@ -1,6 +1,8 @@
 package uonlineeditor;
 
+import au.com.bytecode.opencsv.CSVWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,6 +35,11 @@ public class AreasFile extends CommFile {
 	}
 
 	void writeAreas(Areas areas) {
-		getCsvWriter().writeAll(areas.asData());
+		CSVWriter cw = getCsvWriter();
+		cw.writeAll(areas.asData());
+		try {
+			cw.flush();
+			cw.close();
+		} catch (IOException ex) { Logger.getLogger(AreasFile.class.getName()).log(Level.SEVERE, null, ex); }
 	}
 }

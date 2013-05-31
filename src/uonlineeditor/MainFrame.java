@@ -330,7 +330,7 @@ public class MainFrame extends javax.swing.JFrame {
    }//GEN-LAST:event_RemoveArea
 
    private void SaveAreas(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveAreas
-      areasFile.writeAreas(areas);
+		areasFile.writeAreas(areas);
    }//GEN-LAST:event_SaveAreas
 
     /**

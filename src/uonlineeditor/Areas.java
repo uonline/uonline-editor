@@ -1,6 +1,5 @@
 package uonlineeditor;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -31,7 +30,6 @@ public class Areas extends DefaultTableModel {
 		for (Iterator<Area> it = this.areas.iterator(); it.hasNext();) {
 			Area i = it.next();
 			areas.add(i.asData());
-			System.out.println(ExtString.join(i.asData(), ", "));
 		}
 		return areas;
 	}
