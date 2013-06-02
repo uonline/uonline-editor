@@ -16,7 +16,7 @@ public class Ways {
 		}
 	}
 
-	public String toString() {
+	public String asData() {
 		String[] t = new String[wlist.length];
 		for (int i = 0; i < wlist.length; i++) {
 			t[i] = wlist[i].AsData();

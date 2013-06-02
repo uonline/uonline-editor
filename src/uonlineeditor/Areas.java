@@ -25,6 +25,36 @@ public class Areas extends DefaultTableModel {
 		}
 	}
 
+	List<Location> getLocations() {
+		ArrayList<Location> ll = new ArrayList<>();
+		for (Area a: areas) {
+			for(Location l: a.locs) {
+				ll.add(l);
+			}
+		}
+		return ll;
+	}
+
+	void attachLocations(List<Location> ll) {
+		for(Location l: ll) {
+			for(Area a: areas) {
+				if (a.getParameter(Area.ID) == l.area) {
+					a.addLocation(l);
+					break;
+				}
+			}
+		}
+	}
+
+	int getRowNumberOf(Object obj, int col) {
+		for (int i = 0; i < areas.size(); i++) {
+			if (areas.get(i).getParameter(col) == obj) {
+				return i;
+			}
+		}
+		return 0;
+	}
+
 	List<String[]> asData() {
 		List<String[]> areas = new ArrayList<>();
 		for (Iterator<Area> it = this.areas.iterator(); it.hasNext();) {
@@ -61,6 +91,8 @@ public class Areas extends DefaultTableModel {
 		return index[index.length-1] == areas.size() + 1 - index.length ? areas.size() - 1 : index[0];
 	}
 
+
+	/********************** DefaultTableModel methods **************************/
 	public Class<?> getColumnClass(int columnIndex) {
 		return String.class;
 	}
@@ -103,6 +135,7 @@ public class Areas extends DefaultTableModel {
 	public void setValueAt(Object value, int rowIndex, int columnIndex) {
 		areas.get(rowIndex).setParameter(value, columnIndex);
 	}
+/******************************************************************************/
 
 	private Set<TableModelListener> listeners = new HashSet<>();
 	private ArrayList<Area> areas = new ArrayList<>();

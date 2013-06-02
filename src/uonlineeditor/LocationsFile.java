@@ -2,6 +2,7 @@ package uonlineeditor;
 
 import au.com.bytecode.opencsv.CSVReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +22,7 @@ public class LocationsFile extends CommFile {
 		return new FileNameExtensionFilter("База данных локаций (*.uolb)", "uolb");
 }
 
-	Locations getLocations() {
+	List<Location> getLocations() {
 		List<String[]> csvLocations = null;
 		try {
 			CSVReader cr = getCsvReader();
@@ -30,7 +31,15 @@ public class LocationsFile extends CommFile {
 		} catch (IOException ex) {
 			Logger.getLogger(AreasFile.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		return new Locations(csvLocations);
+		ArrayList<Location> ll = null;
+		for (String[] scvStr: csvLocations) {
+			ll.add(new Location(scvStr));
+		}
+		return ll;
+	}
+
+	void writeLocations(List<Location> l) {
+		//
 	}
 
 }

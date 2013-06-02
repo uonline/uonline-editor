@@ -10,7 +10,11 @@ public class Area {
 
 	private String title;
 	private int id;
-	private Locations locs = new Locations();
+	public ArrayList<Location> locs = new ArrayList<>(); //replace with wrap
+	public Locations llocs;
+
+	public static final int TITLE = 0;
+	public static final int ID = 1;
 
 	Area (int lastId) {
 		title = "";
@@ -30,9 +34,9 @@ public class Area {
 
 	Object getParameter(int columnIndex) {
 		switch (columnIndex) {
-			case 0:
+			case TITLE:
 				return this.title;
-			case 1:
+			case ID:
 				return this.id;
 			default:
 				return "";
@@ -41,14 +45,18 @@ public class Area {
 
 	void setParameter (Object value, int columnIndex) {
 		switch (columnIndex) {
-			case 0:
+			case TITLE:
 				this.title = value.toString();
 				break;
-			case 1:
+			case ID:
 				this.id = Integer.parseInt(value.toString());
 				break;
 			default:
 		}
+	}
+
+	void addLocation(Location l) {
+		llocs.add(l);
 	}
 
 }

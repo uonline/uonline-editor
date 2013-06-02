@@ -21,4 +21,9 @@ public class Locations extends DefaultTableModel {
 			this.locs.add(new Location(it.next()));
 		}
 	}
+
+	void add(Location l) {
+		locs.add(l);
+	}
+
 }

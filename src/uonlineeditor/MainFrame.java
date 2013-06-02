@@ -2,6 +2,7 @@ package uonlineeditor;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -11,14 +12,17 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class MainFrame extends javax.swing.JFrame {
 
+	static MainFrame mf;
+
 	Areas areas;
-	Locations locations;
 	AreasFile areasFile;
+	LocationsFile locationsFile;
+
+	String defaultTitle;
     /**
      * Creates new form MainFrame
      */
-    public MainFrame()
-    {
+	public MainFrame() {
 		try {
 			javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
@@ -26,7 +30,9 @@ public class MainFrame extends javax.swing.JFrame {
 		}
 		initComponents();
 		setLocation(400, 100);
-    }
+
+		defaultTitle = getTitle();
+	}
 
 
 
@@ -47,11 +53,10 @@ public class MainFrame extends javax.swing.JFrame {
       jScrollPane4 = new javax.swing.JScrollPane();
       AreasTable = new javax.swing.JTable();
       jPanel2 = new javax.swing.JPanel();
-      jComboBox1 = new javax.swing.JComboBox();
+      AreasComboBox = new javax.swing.JComboBox();
       jLabel1 = new javax.swing.JLabel();
       jComboBox2 = new javax.swing.JComboBox();
       jLabel2 = new javax.swing.JLabel();
-      jTextField1 = new javax.swing.JTextField();
       jLabel3 = new javax.swing.JLabel();
       jScrollPane2 = new javax.swing.JScrollPane();
       jTextArea1 = new javax.swing.JTextArea();
@@ -91,9 +96,17 @@ public class MainFrame extends javax.swing.JFrame {
 
          },
          new String [] {
-
+            "Зона", "id"
          }
-      ));
+      ) {
+         Class[] types = new Class [] {
+            java.lang.String.class, java.lang.Integer.class
+         };
+
+         public Class getColumnClass(int columnIndex) {
+            return types [columnIndex];
+         }
+      });
       jScrollPane4.setViewportView(AreasTable);
 
       javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -115,7 +128,7 @@ public class MainFrame extends javax.swing.JFrame {
          .addGroup(jPanel1Layout.createSequentialGroup()
             .addContainerGap()
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-               .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
+               .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
                .addGroup(jPanel1Layout.createSequentialGroup()
                   .addComponent(jButton1)
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -128,15 +141,9 @@ public class MainFrame extends javax.swing.JFrame {
 
       jTabbedPane1.addTab("Areas", jPanel1);
 
-      jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
       jLabel1.setText("Area:");
 
-      jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
       jLabel2.setText("Title:");
-
-      jTextField1.setText("jTextField1");
 
       jLabel3.setText("Description:");
 
@@ -148,16 +155,11 @@ public class MainFrame extends javax.swing.JFrame {
 
       jLabel4.setText("Picture URL:");
 
-      jTextField2.setText("jTextField2");
-
       jLabel5.setText("Ways:");
 
       jTable1.setModel(new javax.swing.table.DefaultTableModel(
          new Object [][] {
-            {null, null},
-            {null, null},
-            {null, null},
-            {null, null}
+
          },
          new String [] {
             "Text", "Location"
@@ -176,55 +178,52 @@ public class MainFrame extends javax.swing.JFrame {
          .addGroup(jPanel2Layout.createSequentialGroup()
             .addContainerGap()
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-               .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+               .addGroup(jPanel2Layout.createSequentialGroup()
+                  .addComponent(jLabel4)
+                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                  .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE))
                .addGroup(jPanel2Layout.createSequentialGroup()
                   .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                      .addComponent(jLabel1)
                      .addComponent(jLabel2))
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                   .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                     .addComponent(jTextField1)
+                     .addComponent(AreasComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                      .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                .addComponent(jScrollPane2)
-               .addGroup(jPanel2Layout.createSequentialGroup()
-                  .addComponent(jLabel4)
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addComponent(jTextField2))
-               .addGroup(jPanel2Layout.createSequentialGroup()
-                  .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                     .addComponent(jLabel3)
-                     .addComponent(jLabel5))
-                  .addGap(0, 0, Short.MAX_VALUE))
                .addGroup(jPanel2Layout.createSequentialGroup()
                   .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                   .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                      .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                     .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+               .addGroup(jPanel2Layout.createSequentialGroup()
+                  .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                     .addComponent(jLabel3)
+                     .addComponent(jLabel5))
+                  .addGap(0, 0, Short.MAX_VALUE)))
             .addContainerGap())
       );
       jPanel2Layout.setVerticalGroup(
          jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(jPanel2Layout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(18, 18, 18)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-               .addComponent(jLabel1)
-               .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+               .addComponent(AreasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+               .addComponent(jLabel1))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-               .addComponent(jLabel2)
-               .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+               .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+               .addComponent(jLabel2))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(jLabel3)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                .addComponent(jLabel4)
                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(jLabel5)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,9 +231,9 @@ public class MainFrame extends javax.swing.JFrame {
                   .addComponent(jButton6)
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                   .addComponent(jButton7)
-                  .addGap(0, 194, Short.MAX_VALUE))
+                  .addGap(0, 113, Short.MAX_VALUE))
                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-            .addContainerGap())
+            .addGap(34, 34, 34))
       );
 
       jTabbedPane1.addTab("Locations", jPanel2);
@@ -263,6 +262,11 @@ public class MainFrame extends javax.swing.JFrame {
 
       jButton9.setText("Save locations");
       jButton9.setEnabled(false);
+      jButton9.addMouseListener(new java.awt.event.MouseAdapter() {
+         public void mouseClicked(java.awt.event.MouseEvent evt) {
+            SaveLocations(evt);
+         }
+      });
 
       javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
       getContentPane().setLayout(layout);
@@ -292,8 +296,8 @@ public class MainFrame extends javax.swing.JFrame {
                .addComponent(SaveAreasButton)
                .addComponent(jButton9))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(jTabbedPane1)
-            .addContainerGap())
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
       );
 
       pack();
@@ -305,13 +309,44 @@ public class MainFrame extends javax.swing.JFrame {
 		areasFile = af;
 		areas = areasFile.getAreas();
 		AreasTable.setModel(areas);
+		AreasComboBox.setModel(new DefaultComboBoxModel() {
+
+			@Override
+			public Object getElementAt(int index) {
+				return mf.areas.getValueAt(index, Area.TITLE);
+			}
+
+			@Override
+			public int getSize() {
+				return mf.areas.getRowCount();
+			}
+
+			@Override
+			public Object getSelectedItem() {
+				int row = mf.AreasTable.getSelectedRow();
+				if (row == -1) return "";
+				return mf.areas.getValueAt(row, Area.TITLE);
+			}
+
+			@Override
+			public void setSelectedItem(Object anObject) {
+				int ind = areas.getRowNumberOf(anObject, Area.TITLE);
+				mf.AreasTable.setRowSelectionInterval(ind, ind);
+			}
+		});
 		SaveAreasButton.setEnabled(true);
    }//GEN-LAST:event_LoadAreas
 
+	public int getSelectedRows() {
+		return AreasTable.getSelectedRow();
+	}
+
    private void LoadLocations(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoadLocations
-		LocationsFile locationsFile = new LocationsFile(CommFile.OPEN);
-		locations = locationsFile.getLocations();
-		jTable1.setModel(locations);
+		LocationsFile lf = new LocationsFile(CommFile.OPEN);
+		if (!lf.approved) return;
+		locationsFile = lf;
+		areas.attachLocations(locationsFile.getLocations());
+		//jTable1.setModel(locations);
    }//GEN-LAST:event_LoadLocations
 
    private void AddNewArea(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddNewArea
@@ -341,6 +376,16 @@ public class MainFrame extends javax.swing.JFrame {
 		}
 		areasFile.writeAreas(areas);
    }//GEN-LAST:event_SaveAreas
+
+   private void SaveLocations(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveLocations
+		LocationsFile lf;
+		if (locationsFile == null) {
+			lf = new LocationsFile(CommFile.SAVE);
+			if (!lf.approved) return;
+			locationsFile = lf;
+		}
+		locationsFile.writeLocations(areas.getLocations());
+   }//GEN-LAST:event_SaveLocations
 
     /**
      * @param args the command line arguments
@@ -386,11 +431,13 @@ public class MainFrame extends javax.swing.JFrame {
         {
             public void run()
             {
-                new MainFrame().setVisible(true);
-            }
+               mf = new MainFrame();
+					mf.setVisible(true);
+   }
         });
     }
    // Variables declaration - do not modify//GEN-BEGIN:variables
+   private javax.swing.JComboBox AreasComboBox;
    private javax.swing.JTable AreasTable;
    private javax.swing.JButton SaveAreasButton;
    private javax.swing.JButton jButton1;
@@ -401,7 +448,6 @@ public class MainFrame extends javax.swing.JFrame {
    private javax.swing.JButton jButton6;
    private javax.swing.JButton jButton7;
    private javax.swing.JButton jButton9;
-   private javax.swing.JComboBox jComboBox1;
    private javax.swing.JComboBox jComboBox2;
    private javax.swing.JLabel jLabel1;
    private javax.swing.JLabel jLabel2;
@@ -416,7 +462,6 @@ public class MainFrame extends javax.swing.JFrame {
    private javax.swing.JTabbedPane jTabbedPane1;
    private javax.swing.JTable jTable1;
    private javax.swing.JTextArea jTextArea1;
-   private javax.swing.JTextField jTextField1;
    private javax.swing.JTextField jTextField2;
    // End of variables declaration//GEN-END:variables
 }
