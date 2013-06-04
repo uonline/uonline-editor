@@ -1,25 +1,22 @@
 package uonlineeditor;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author houjing
  */
 public class Area {
 
-	private String title;
+	private String title = "Area";
 	private int id;
-	public ArrayList<Location> locs = new ArrayList<>(); //replace with wrap
-	public Locations llocs;
+	public Locations locs = new Locations();
 
 	public static final int TITLE = 0;
 	public static final int ID = 1;
 
 	Area (int lastId) {
-		title = "";
+		title += lastId;
 		id = lastId;
-}
+	}
 
 	Area(String[] data) {
 		//System.out.println("Area constructor");
@@ -56,7 +53,7 @@ public class Area {
 	}
 
 	void addLocation(Location l) {
-		llocs.add(l);
+		locs.add(l);
 	}
 
 }

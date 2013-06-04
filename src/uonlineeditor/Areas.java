@@ -1,18 +1,14 @@
 package uonlineeditor;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author houjing
  */
-public class Areas extends DefaultTableModel {
+public class Areas {
 
 	Areas() {}
 
@@ -20,7 +16,7 @@ public class Areas extends DefaultTableModel {
 		//System.out.println("Areas constructor");
 		for (Iterator<String[]> it = areas.iterator(); it.hasNext();) {
 			Area ar = new Area(it.next());
-			lastId = lastId > (int) ar.getParameter(1) ? lastId : (int) ar.getParameter(1);
+			lastId = Math.max (lastId, (int) ar.getParameter(Area.ID));
 			this.areas.add(ar);
 		}
 	}
@@ -28,7 +24,7 @@ public class Areas extends DefaultTableModel {
 	List<Location> getLocations() {
 		ArrayList<Location> ll = new ArrayList<>();
 		for (Area a: areas) {
-			for(Location l: a.locs) {
+			for(Location l: a.locs.locs) {
 				ll.add(l);
 			}
 		}
@@ -52,7 +48,7 @@ public class Areas extends DefaultTableModel {
 				return i;
 			}
 		}
-		return 0;
+		return -1;
 	}
 
 	List<String[]> asData() {
@@ -84,61 +80,15 @@ public class Areas extends DefaultTableModel {
 	}
 
 	int removeAreas(int[] index) {
-		if (this.getRowCount() == 1) return 0;
+		if (areas.size()== 1) return 0;
 		for (int i = index.length - 1; i >= 0 ; i--) {
-			this.removeArea(index[i]);
+			removeArea(index[i]);
 		}
 		return index[index.length-1] == areas.size() + 1 - index.length ? areas.size() - 1 : index[0];
 	}
 
 
-	/********************** DefaultTableModel methods **************************/
-	public Class<?> getColumnClass(int columnIndex) {
-		return String.class;
-	}
-
-	public int getColumnCount() {
-		return 2;
-	}
-
-	public String getColumnName(int columnIndex) {
-		switch (columnIndex) {
-			case 0:
-				return "Зона";
-			case 1:
-				return "id";
-			default:
-				return "";
-		}
-	}
-
-	public int getRowCount() {
-		return areas == null ? 0 : areas.size();
-	}
-
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		return areas.get(rowIndex).getParameter(columnIndex);
-	}
-
-	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return true;
-	}
-
-	public void addTableModelListener(TableModelListener listener) {
-		listeners.add(listener);
-	}
-
-	public void removeTableModelListener(TableModelListener listener) {
-		listeners.remove(listener);
-	}
-
-	public void setValueAt(Object value, int rowIndex, int columnIndex) {
-		areas.get(rowIndex).setParameter(value, columnIndex);
-	}
-/******************************************************************************/
-
-	private Set<TableModelListener> listeners = new HashSet<>();
-	private ArrayList<Area> areas = new ArrayList<>();
+	public ArrayList<Area> areas = new ArrayList<>();
 	private int lastId = 0;
 
 }

@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -12,13 +13,20 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class MainFrame extends javax.swing.JFrame {
 
+	private boolean aFileOpened = false;
+	private boolean lFileOpened = false;
+	private boolean areasChanged = false;
+	private boolean locationsChanged = false;
+
 	static MainFrame mf;
 
-	Areas areas;
+	Areas areas = new Areas();
 	AreasFile areasFile;
 	LocationsFile locationsFile;
 
 	String defaultTitle;
+
+	String addNew = "Add new ...";
     /**
      * Creates new form MainFrame
      */
@@ -55,7 +63,7 @@ public class MainFrame extends javax.swing.JFrame {
       jPanel2 = new javax.swing.JPanel();
       AreasComboBox = new javax.swing.JComboBox();
       jLabel1 = new javax.swing.JLabel();
-      jComboBox2 = new javax.swing.JComboBox();
+      LocationsComboBox = new javax.swing.JComboBox();
       jLabel2 = new javax.swing.JLabel();
       jLabel3 = new javax.swing.JLabel();
       jScrollPane2 = new javax.swing.JScrollPane();
@@ -67,6 +75,7 @@ public class MainFrame extends javax.swing.JFrame {
       jTable1 = new javax.swing.JTable();
       jButton6 = new javax.swing.JButton();
       jButton7 = new javax.swing.JButton();
+      jButton8 = new javax.swing.JButton();
       jButton4 = new javax.swing.JButton();
       jButton5 = new javax.swing.JButton();
       SaveAreasButton = new javax.swing.JButton();
@@ -143,7 +152,7 @@ public class MainFrame extends javax.swing.JFrame {
 
       jLabel1.setText("Area:");
 
-      jLabel2.setText("Title:");
+      jLabel2.setText("Location:");
 
       jLabel3.setText("Description:");
 
@@ -171,6 +180,8 @@ public class MainFrame extends javax.swing.JFrame {
 
       jButton7.setText("Remove");
 
+      jButton8.setText("Remove");
+
       javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
       jPanel2.setLayout(jPanel2Layout);
       jPanel2Layout.setHorizontalGroup(
@@ -189,7 +200,10 @@ public class MainFrame extends javax.swing.JFrame {
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                   .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                      .addComponent(AreasComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                     .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(LocationsComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton8))))
                .addComponent(jScrollPane2)
                .addGroup(jPanel2Layout.createSequentialGroup()
                   .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
@@ -213,8 +227,9 @@ public class MainFrame extends javax.swing.JFrame {
                .addComponent(jLabel1))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-               .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-               .addComponent(jLabel2))
+               .addComponent(LocationsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+               .addComponent(jLabel2)
+               .addComponent(jButton8))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(jLabel3)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -231,7 +246,7 @@ public class MainFrame extends javax.swing.JFrame {
                   .addComponent(jButton6)
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                   .addComponent(jButton7)
-                  .addGap(0, 113, Short.MAX_VALUE))
+                  .addGap(0, 110, Short.MAX_VALUE))
                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
             .addGap(34, 34, 34))
       );
@@ -303,42 +318,128 @@ public class MainFrame extends javax.swing.JFrame {
       pack();
    }// </editor-fold>//GEN-END:initComponents
 
+	private void updateTitle() {
+		switch(jTabbedPane1.getSelectedIndex()) {
+			case 0:
+				setTitle(defaultTitle + " - " + (areasFile!=null?areasFile.file.getAbsolutePath():"Unsaved") );
+				break;
+			case 1:
+				setTitle(defaultTitle);
+				break;
+		}
+	}
+
    private void LoadAreas(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoadAreas
 		AreasFile af = new AreasFile(CommFile.OPEN);
 		if (!af.approved) return;
 		areasFile = af;
 		areas = areasFile.getAreas();
-		AreasTable.setModel(areas);
+		AreasTable.setModel(new DefaultTableModel() {
+			public Class<?> getColumnClass(int columnIndex) {
+				return String.class;
+			}
+
+			public int getColumnCount() {
+				return 2;
+			}
+
+			public String getColumnName(int columnIndex) {
+				switch (columnIndex) {
+					case Area.TITLE:
+						return "Зона";
+					case Area.ID:
+						return "id";
+					default:
+						return "";
+				}
+			}
+
+			public int getRowCount() {
+				return areas.areas == null ? 0 : areas.areas.size();
+			}
+
+			public Object getValueAt(int rowIndex, int columnIndex) {
+				return areas.areas.get(rowIndex).getParameter(columnIndex);
+			}
+
+			public boolean isCellEditable(int rowIndex, int columnIndex) {
+				return true;
+			}
+
+			public void setValueAt(Object value, int rowIndex, int columnIndex) {
+				areas.areas.get(rowIndex).setParameter(value, columnIndex);
+			}
+		});
 		AreasComboBox.setModel(new DefaultComboBoxModel() {
 
 			@Override
 			public Object getElementAt(int index) {
-				return mf.areas.getValueAt(index, Area.TITLE);
+				return AreasTable.getValueAt(index, Area.TITLE);
 			}
 
 			@Override
 			public int getSize() {
-				return mf.areas.getRowCount();
+				return AreasTable.getRowCount();
 			}
 
 			@Override
 			public Object getSelectedItem() {
-				int row = mf.AreasTable.getSelectedRow();
-				if (row == -1) return "";
-				return mf.areas.getValueAt(row, Area.TITLE);
+				int row = AreasTable.getSelectedRow();
+				if (row == -1) return "<Select area>";
+				return AreasTable.getValueAt(row, Area.TITLE);
 			}
 
 			@Override
 			public void setSelectedItem(Object anObject) {
 				int ind = areas.getRowNumberOf(anObject, Area.TITLE);
-				mf.AreasTable.setRowSelectionInterval(ind, ind);
+				AreasTable.setRowSelectionInterval(ind, ind);
+			}
+		});
+		LocationsComboBox.setModel(new DefaultComboBoxModel() {
+
+			@Override
+			public void setSelectedItem(Object anItem) {
+				if (getSelectedArea() == null)
+					return;
+				else if (anItem == addNew) {
+					int ind = areas.areas.indexOf(getSelectedArea());
+					getSelectedArea().locs.add(ind);
+					fireIntervalAdded(this, ind, ind);
+				}
+				else
+					getSelectedArea().locs.selected = getSelectedArea().locs.getIndexOf(anItem, Location.TITLE);
+			}
+
+			@Override
+			public Object getSelectedItem() {
+				if (getSelectedArea() == null || getSelectedArea().locs == null) return "<Empty>";
+				else {
+					int sel = getSelectedArea().locs.selected;
+					if (sel == -1) return "<Select location>";
+					return getSelectedArea().locs.locs.get(sel).getParameter(Location.TITLE);
+				}
+			}
+
+			@Override
+			public int getSize() {
+				if (getSelectedArea() == null || getSelectedArea().locs == null) return 1;
+				else return getSelectedArea().locs.locs.size() + 1;
+			}
+
+			@Override
+			public Object getElementAt(int index) {
+				if (index == getSize() - 1) return addNew;
+				return getSelectedArea().locs.locs.get(index).getParameter(Location.TITLE);
 			}
 		});
 		SaveAreasButton.setEnabled(true);
+		updateTitle();
    }//GEN-LAST:event_LoadAreas
 
-	public int getSelectedRows() {
-		return AreasTable.getSelectedRow();
+	public Area getSelectedArea() {
+		int row = AreasTable.getSelectedRow();
+		if (row == -1) return null;
+		else return areas.areas.get(row);
 	}
 
    private void LoadLocations(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoadLocations
@@ -351,9 +452,9 @@ public class MainFrame extends javax.swing.JFrame {
 
    private void AddNewArea(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddNewArea
 		if (areas == null) {
-			areas = new Areas();
-			AreasTable.setModel(areas);
+//			AreasTable.setModel(areas);
 			SaveAreasButton.setEnabled(true);
+			updateTitle();
 		}
 		int sel = areas.addNewArea(AreasTable.getSelectedRow());
 		AreasTable.setRowSelectionInterval(sel, sel);
@@ -439,6 +540,7 @@ public class MainFrame extends javax.swing.JFrame {
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.JComboBox AreasComboBox;
    private javax.swing.JTable AreasTable;
+   private javax.swing.JComboBox LocationsComboBox;
    private javax.swing.JButton SaveAreasButton;
    private javax.swing.JButton jButton1;
    private javax.swing.JButton jButton2;
@@ -447,8 +549,8 @@ public class MainFrame extends javax.swing.JFrame {
    private javax.swing.JButton jButton5;
    private javax.swing.JButton jButton6;
    private javax.swing.JButton jButton7;
+   private javax.swing.JButton jButton8;
    private javax.swing.JButton jButton9;
-   private javax.swing.JComboBox jComboBox2;
    private javax.swing.JLabel jLabel1;
    private javax.swing.JLabel jLabel2;
    private javax.swing.JLabel jLabel3;

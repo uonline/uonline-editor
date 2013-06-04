@@ -7,43 +7,56 @@ package uonlineeditor;
 
 public class Location {
 
-	public String title;
+	public static final int TITLE = 0;
+	public static final int WAYS = 1;
+	public static final int DESCRIPTION = 2;
+	public static final int ID = 3;
+	public static final int AREA = 4;
+	public static final int ISDEFAULT = 5;
+
+	public String title = "Location";
 	public Ways ways;
-	public String description;
+	public String description = "";
 	public int id;
 	public int area;
-	public int Default;
+	public int isDefault = 0;
+
+	Location(int area, int lastId) {
+		id = lastId;
+		this.area = area;
+		title += lastId;
+	}
 
 	Location(String[] data) {
 		setParameters(data);
 	}
 
-	void setParameter(String s, int pos) {
+	final void setParameter(String s, int pos) {
 		switch (pos) {
-			case 0:
+			case TITLE:
 				title = s;
 				break;
-			case 1:
+			case WAYS:
 				ways = new Ways(s);
 				break;
-			case 2:
+			case DESCRIPTION:
 				description = s;
 				break;
-			case 3:
+			case ID:
 				id = Integer.parseInt(s);
 				break;
-			case 4:
+			case AREA:
 				area = Integer.parseInt(s);
 				break;
-			case 5:
-				Default = Integer.parseInt(s);
+			case ISDEFAULT:
+				isDefault = Integer.parseInt(s);
 				break;
 			default:
 				break;
 		}
 	}
 
-	void setParameters(String[] data) {
+	final void setParameters(String[] data) {
 		for (int i = 0; i < data.length; i++) {
 			setParameter(data[i], i);
 		}
@@ -51,18 +64,18 @@ public class Location {
 
 	String getParameter(int pos) {
 		switch (pos) {
-			case 0:
+			case TITLE:
 				return title;
-			case 1:
+			case WAYS:
 				return ways.asData();
-			case 2:
+			case DESCRIPTION:
 				return description;
-			case 3:
+			case ID:
 				return String.valueOf(id);
-			case 4:
+			case AREA:
 				return String.valueOf(area);
-			case 5:
-				return String.valueOf(Default);
+			case ISDEFAULT:
+				return String.valueOf(isDefault);
 			default:
 				return "";
 		}
