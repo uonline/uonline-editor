@@ -8,7 +8,7 @@ public class Area {
 
 	private String title = "Area";
 	private int id;
-	public Locations locs = new Locations();
+	public Locations locs;
 
 	public static final int TITLE = 0;
 	public static final int ID = 1;
@@ -16,12 +16,13 @@ public class Area {
 	Area (int lastId) {
 		title += lastId;
 		id = lastId;
+		locs = new Locations(id);
 	}
 
 	Area(String[] data) {
-		//System.out.println("Area constructor");
 		title = data[0];
 		id = Integer.parseInt(data[1]);
+		locs = new Locations(id);
 	}
 
 	String[] asData() {
@@ -53,7 +54,7 @@ public class Area {
 	}
 
 	void addLocation(Location l) {
-		locs.add(l);
+		locs.locs.add(l);
 	}
 
 }

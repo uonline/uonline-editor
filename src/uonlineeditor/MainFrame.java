@@ -1,11 +1,16 @@
 package uonlineeditor;
 
+import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.TextAction;
 
 /**
  *
@@ -91,7 +96,7 @@ public class MainFrame extends javax.swing.JFrame {
       AddAreaButton.setText("Add");
       AddAreaButton.addMouseListener(new java.awt.event.MouseAdapter() {
          public void mouseClicked(java.awt.event.MouseEvent evt) {
-            AddNewArea(evt);
+            AddArea(evt);
          }
       });
 
@@ -160,8 +165,18 @@ public class MainFrame extends javax.swing.JFrame {
       jLabel2.setText("Location:");
 
       AddLocationButton.setText("Add");
+      AddLocationButton.addMouseListener(new java.awt.event.MouseAdapter() {
+         public void mouseClicked(java.awt.event.MouseEvent evt) {
+            AddLocation(evt);
+         }
+      });
 
       RemoveLocationButton.setText("Remove");
+      RemoveLocationButton.addMouseListener(new java.awt.event.MouseAdapter() {
+         public void mouseClicked(java.awt.event.MouseEvent evt) {
+            RemoveLocation(evt);
+         }
+      });
 
       jLabel6.setText("Title:");
 
@@ -382,16 +397,16 @@ public class MainFrame extends javax.swing.JFrame {
 		SaveLocationsButton.setEnabled(true);
    }//GEN-LAST:event_LoadLocations
 
-   private void AddNewArea(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddNewArea
+   private void AddArea(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddArea
 		if (areas.areas.isEmpty()) {
 			SaveAreasButton.setEnabled(true);
 			updateTitle();
 		}
-		int sel = areas.addNewArea(AreasTable.getSelectedRow());
+		int sel = areas.addArea(AreasTable.getSelectedRow());
 		AreasTable.setRowSelectionInterval(sel, sel);
 		AreasTable.updateUI();
 		AreasComboBox.updateUI();
-   }//GEN-LAST:event_AddNewArea
+   }//GEN-LAST:event_AddArea
 
    private void RemoveArea(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RemoveArea
 		int sel = areas.removeAreas(AreasTable.getSelectedRows());
@@ -424,6 +439,26 @@ public class MainFrame extends javax.swing.JFrame {
 		}
 		locationsFile.writeLocations(areas.getLocations());
    }//GEN-LAST:event_SaveLocations
+
+   private void AddLocation(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddLocation
+		if (getSelectedArea() == null) return;
+		if (areas.getLocations().isEmpty()) {
+			SaveLocationsButton.setEnabled(true);
+			updateTitle();
+		}
+		getSelectedArea().locs.addLocation();
+		LocationsComboBox.updateUI();
+   }//GEN-LAST:event_AddLocation
+
+   private void RemoveLocation(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RemoveLocation
+		if (getSelectedArea() == null) return;
+		getSelectedArea().locs.removeLocation();
+		LocationsComboBox.updateUI();
+		if (areas.getLocations().isEmpty()) {
+			SaveLocationsButton.setEnabled(false);
+			updateTitle();
+		}
+   }//GEN-LAST:event_RemoveLocation
 
 	/**
 	 * @param args the command line arguments
@@ -534,7 +569,12 @@ public class MainFrame extends javax.swing.JFrame {
 
 			@Override
 			public Object getSelectedItem() {
-				if (getSelectedArea() == null || getSelectedArea().locs == null || getSelectedArea().locs.locs.isEmpty()) return "<Empty>";
+				if (getSelectedArea() == null || getSelectedArea().locs == null || getSelectedArea().locs.locs.isEmpty()) {
+					LocationTitleTextField.setText("");
+					LocationDescriptionTextArea.setText("");
+					LocationImageURLTextField.setText("");
+					return "<Empty>";
+				}
 				else {
 					int sel = getSelectedArea().locs.selected;
 					if (sel == -1) {
@@ -563,6 +603,33 @@ public class MainFrame extends javax.swing.JFrame {
 				return getSelectedArea().locs.locs.get(index).getParameter(Location.TITLE);
 			}
 		});
+		LocationTitleTextField.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				if (getSelectedArea() == null || getSelectedArea().locs.getSelected() == null) return;
+				try {
+					getSelectedArea().locs.getSelected().title = e.getDocument().getText(0, e.getDocument().getLength());
+				} catch (BadLocationException ex) { Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex); }
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				if (getSelectedArea() == null || getSelectedArea().locs.getSelected() == null) return;
+				try {
+					getSelectedArea().locs.getSelected().title = e.getDocument().getText(0, e.getDocument().getLength());
+				} catch (BadLocationException ex) { Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex); }
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				if (getSelectedArea() == null || getSelectedArea().locs.getSelected() == null) return;
+				try {
+					getSelectedArea().locs.getSelected().title = e.getDocument().getText(0, e.getDocument().getLength());
+				} catch (BadLocationException ex) { Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex); }
+			}
+		});
+//		MainTabbedPane.setModel(null);
 	}
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.JButton AddAreaButton;

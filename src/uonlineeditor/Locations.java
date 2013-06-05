@@ -3,7 +3,6 @@ package uonlineeditor;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,10 +12,13 @@ public class Locations {
 
 	public ArrayList<Location> locs = new ArrayList<>();
 
+	public int areaId;
 	public int lastId = 0;
 	public int selected = -1;
 
-	Locations () {}
+	Locations (int areaId) {
+		this.areaId = areaId;
+	}
 
 	Locations (List<String[]> locs) {
 		//System.out.println("Locations constructor");
@@ -35,15 +37,6 @@ public class Locations {
 		return csv;
 	}
 
-	void add(Location l) {
-		locs.add(l);
-	}
-
-	void add(int areaId) {
-		selected = lastId;
-		locs.add(new Location(areaId, lastId++));
-	}
-
 	int getIndexOf(Object obj, int param) {
 		for (int i = 0; i < locs.size(); i++) {
 			if (locs.get(i).getParameter(param) == obj) {
@@ -54,7 +47,30 @@ public class Locations {
 	}
 
 	Location getSelected() {
+		if (selected == -1 || selected > locs.size() - 1) return null;
 		return locs.get(selected);
+	}
+
+	void addLocation() {
+		if (selected == -1 || selected > locs.size() - 1) {
+			locs.add(new Location(areaId, lastId++));
+			selected = 0;
+		}
+		else if (locs.size() == selected + 1) {
+			locs.add(new Location(areaId, lastId++));
+			selected = locs.size()-1;
+		}
+		else {
+			locs.add(selected + 1, new Location(areaId, lastId++));
+			selected = selected + 1;
+		}
+	}
+
+	void removeLocation() {
+		if(selected == -1) return;
+		locs.remove(selected);
+		selected--;
+		if(selected == -1 && !locs.isEmpty()) selected=0;
 	}
 
 }

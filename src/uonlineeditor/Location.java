@@ -23,9 +23,9 @@ public class Location {
 	public int isDefault = 0;
 	public String imageURL;
 
-	Location(int area, int lastId) {
+	Location(int areaId, int lastId) {
 		id = lastId;
-		this.area = area;
+		this.area = areaId;
 		title += lastId;
 	}
 

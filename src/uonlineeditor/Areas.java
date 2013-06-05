@@ -58,7 +58,7 @@ public class Areas {
 		return areas;
 	}
 
-	int addNewArea(int index) {
+	int addArea(int index) {
 		if (index == -1 || index > areas.size() - 1) {
 			areas.add(new Area(++lastId));
 			return 0;
@@ -78,7 +78,7 @@ public class Areas {
 	}
 
 	int removeAreas(int[] index) {
-		if (areas.size() < 1) return -1;
+		if (areas.size() == -1) return -1;
 		for (int i = index.length - 1; i >= 0 ; i--) {
 			removeArea(index[i]);
 		}
