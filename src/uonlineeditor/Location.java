@@ -12,7 +12,8 @@ public class Location {
 	public static final int DESCRIPTION = 2;
 	public static final int ID = 3;
 	public static final int AREA = 4;
-	public static final int ISDEFAULT = 5;
+	public static final int IS_DEFAULT = 5;
+	public static final int IMAGE_URL = 6;
 
 	public String title = "Location";
 	public Ways ways;
@@ -20,6 +21,7 @@ public class Location {
 	public int id;
 	public int area;
 	public int isDefault = 0;
+	public String imageURL;
 
 	Location(int area, int lastId) {
 		id = lastId;
@@ -29,6 +31,11 @@ public class Location {
 
 	Location(String[] data) {
 		setParameters(data);
+	}
+
+	String[] asData() {
+		String[] data = {title, ways.asData(), description, String.valueOf(id), String.valueOf(area), String.valueOf(isDefault), imageURL};
+		return data;
 	}
 
 	final void setParameter(String s, int pos) {
@@ -48,8 +55,11 @@ public class Location {
 			case AREA:
 				area = Integer.parseInt(s);
 				break;
-			case ISDEFAULT:
+			case IS_DEFAULT:
 				isDefault = Integer.parseInt(s);
+				break;
+			case IMAGE_URL:
+				imageURL = s;
 				break;
 			default:
 				break;
@@ -62,7 +72,7 @@ public class Location {
 		}
 	}
 
-	String getParameter(int pos) {
+	Object getParameter(int pos) {
 		switch (pos) {
 			case TITLE:
 				return title;
@@ -71,11 +81,11 @@ public class Location {
 			case DESCRIPTION:
 				return description;
 			case ID:
-				return String.valueOf(id);
+				return id;
 			case AREA:
-				return String.valueOf(area);
-			case ISDEFAULT:
-				return String.valueOf(isDefault);
+				return area;
+			case IS_DEFAULT:
+				return isDefault;
 			default:
 				return "";
 		}

@@ -26,20 +26,20 @@ public class MainFrame extends javax.swing.JFrame {
 
 	String defaultTitle;
 
-	String addNew = "Add new ...";
     /**
      * Creates new form MainFrame
      */
 	public MainFrame() {
-		try {
-			javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-			Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-		}
+//		try {
+//			javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+//			Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+//		}
 		initComponents();
 		setLocation(400, 100);
 
 		defaultTitle = getTitle();
+		setUIModels();
 	}
 
 
@@ -53,46 +53,50 @@ public class MainFrame extends javax.swing.JFrame {
    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
    private void initComponents() {
 
-      jTabbedPane1 = new javax.swing.JTabbedPane();
-      jPanel1 = new javax.swing.JPanel();
-      jButton1 = new javax.swing.JButton();
-      jButton2 = new javax.swing.JButton();
+      MainTabbedPane = new javax.swing.JTabbedPane();
+      AreasPanel = new javax.swing.JPanel();
+      AddAreaButton = new javax.swing.JButton();
+      RemoveAreaButton = new javax.swing.JButton();
       jButton3 = new javax.swing.JButton();
-      jScrollPane4 = new javax.swing.JScrollPane();
+      AreasScrollPane = new javax.swing.JScrollPane();
       AreasTable = new javax.swing.JTable();
-      jPanel2 = new javax.swing.JPanel();
-      AreasComboBox = new javax.swing.JComboBox();
+      LocationsPanel = new javax.swing.JPanel();
       jLabel1 = new javax.swing.JLabel();
-      LocationsComboBox = new javax.swing.JComboBox();
+      AreasComboBox = new javax.swing.JComboBox();
       jLabel2 = new javax.swing.JLabel();
+      LocationsComboBox = new javax.swing.JComboBox();
+      AddLocationButton = new javax.swing.JButton();
+      RemoveLocationButton = new javax.swing.JButton();
+      jLabel6 = new javax.swing.JLabel();
+      LocationTitleTextField = new javax.swing.JTextField();
+      RenameLocationButton = new javax.swing.JButton();
       jLabel3 = new javax.swing.JLabel();
       jScrollPane2 = new javax.swing.JScrollPane();
-      jTextArea1 = new javax.swing.JTextArea();
+      LocationDescriptionTextArea = new javax.swing.JTextArea();
       jLabel4 = new javax.swing.JLabel();
-      jTextField2 = new javax.swing.JTextField();
+      LocationImageURLTextField = new javax.swing.JTextField();
       jLabel5 = new javax.swing.JLabel();
       jScrollPane3 = new javax.swing.JScrollPane();
-      jTable1 = new javax.swing.JTable();
-      jButton6 = new javax.swing.JButton();
-      jButton7 = new javax.swing.JButton();
-      jButton8 = new javax.swing.JButton();
-      jButton4 = new javax.swing.JButton();
-      jButton5 = new javax.swing.JButton();
+      WaysTable = new javax.swing.JTable();
+      AddWayButton = new javax.swing.JButton();
+      RemoveWayButton = new javax.swing.JButton();
+      LoadAreasButton = new javax.swing.JButton();
+      LoadLocationsButton = new javax.swing.JButton();
       SaveAreasButton = new javax.swing.JButton();
-      jButton9 = new javax.swing.JButton();
+      SaveLocationsButton = new javax.swing.JButton();
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-      setTitle("Uonline Editor");
+      setTitle("uonline Editor");
 
-      jButton1.setText("Add");
-      jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+      AddAreaButton.setText("Add");
+      AddAreaButton.addMouseListener(new java.awt.event.MouseAdapter() {
          public void mouseClicked(java.awt.event.MouseEvent evt) {
             AddNewArea(evt);
          }
       });
 
-      jButton2.setText("Remove");
-      jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+      RemoveAreaButton.setText("Remove");
+      RemoveAreaButton.addMouseListener(new java.awt.event.MouseAdapter() {
          public void mouseClicked(java.awt.event.MouseEvent evt) {
             RemoveArea(evt);
          }
@@ -116,57 +120,66 @@ public class MainFrame extends javax.swing.JFrame {
             return types [columnIndex];
          }
       });
-      jScrollPane4.setViewportView(AreasTable);
+      AreasScrollPane.setViewportView(AreasTable);
 
-      javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-      jPanel1.setLayout(jPanel1Layout);
-      jPanel1Layout.setHorizontalGroup(
-         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addGroup(jPanel1Layout.createSequentialGroup()
+      javax.swing.GroupLayout AreasPanelLayout = new javax.swing.GroupLayout(AreasPanel);
+      AreasPanel.setLayout(AreasPanelLayout);
+      AreasPanelLayout.setHorizontalGroup(
+         AreasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+         .addGroup(AreasPanelLayout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
+            .addComponent(AreasScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-               .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(AreasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+               .addComponent(RemoveAreaButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-               .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+               .addComponent(AddAreaButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addContainerGap())
       );
-      jPanel1Layout.setVerticalGroup(
-         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addGroup(jPanel1Layout.createSequentialGroup()
+      AreasPanelLayout.setVerticalGroup(
+         AreasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+         .addGroup(AreasPanelLayout.createSequentialGroup()
             .addContainerGap()
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-               .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
-               .addGroup(jPanel1Layout.createSequentialGroup()
-                  .addComponent(jButton1)
+            .addGroup(AreasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+               .addGroup(AreasPanelLayout.createSequentialGroup()
+                  .addComponent(AreasScrollPane)
+                  .addContainerGap())
+               .addGroup(AreasPanelLayout.createSequentialGroup()
+                  .addComponent(AddAreaButton)
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addComponent(jButton2)
+                  .addComponent(RemoveAreaButton)
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                   .addComponent(jButton3)
-                  .addGap(0, 0, Short.MAX_VALUE)))
-            .addContainerGap())
+                  .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
       );
 
-      jTabbedPane1.addTab("Areas", jPanel1);
+      MainTabbedPane.addTab("Areas", AreasPanel);
 
       jLabel1.setText("Area:");
 
       jLabel2.setText("Location:");
 
+      AddLocationButton.setText("Add");
+
+      RemoveLocationButton.setText("Remove");
+
+      jLabel6.setText("Title:");
+
+      RenameLocationButton.setText("Rename");
+
       jLabel3.setText("Description:");
 
-      jTextArea1.setColumns(20);
-      jTextArea1.setLineWrap(true);
-      jTextArea1.setRows(5);
-      jTextArea1.setWrapStyleWord(true);
-      jScrollPane2.setViewportView(jTextArea1);
+      LocationDescriptionTextArea.setColumns(20);
+      LocationDescriptionTextArea.setLineWrap(true);
+      LocationDescriptionTextArea.setRows(5);
+      LocationDescriptionTextArea.setWrapStyleWord(true);
+      jScrollPane2.setViewportView(LocationDescriptionTextArea);
 
       jLabel4.setText("Picture URL:");
 
       jLabel5.setText("Ways:");
 
-      jTable1.setModel(new javax.swing.table.DefaultTableModel(
+      WaysTable.setModel(new javax.swing.table.DefaultTableModel(
          new Object [][] {
 
          },
@@ -174,94 +187,105 @@ public class MainFrame extends javax.swing.JFrame {
             "Text", "Location"
          }
       ));
-      jScrollPane3.setViewportView(jTable1);
+      jScrollPane3.setViewportView(WaysTable);
 
-      jButton6.setText("Add");
+      AddWayButton.setText("Add");
 
-      jButton7.setText("Remove");
+      RemoveWayButton.setText("Remove");
 
-      jButton8.setText("Remove");
-
-      javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-      jPanel2.setLayout(jPanel2Layout);
-      jPanel2Layout.setHorizontalGroup(
-         jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addGroup(jPanel2Layout.createSequentialGroup()
+      javax.swing.GroupLayout LocationsPanelLayout = new javax.swing.GroupLayout(LocationsPanel);
+      LocationsPanel.setLayout(LocationsPanelLayout);
+      LocationsPanelLayout.setHorizontalGroup(
+         LocationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+         .addGroup(LocationsPanelLayout.createSequentialGroup()
             .addContainerGap()
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-               .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(LocationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+               .addGroup(LocationsPanelLayout.createSequentialGroup()
                   .addComponent(jLabel4)
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE))
-               .addGroup(jPanel2Layout.createSequentialGroup()
-                  .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                     .addComponent(jLabel1)
-                     .addComponent(jLabel2))
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                  .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                     .addComponent(AreasComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(LocationsComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton8))))
+                  .addComponent(LocationImageURLTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE))
                .addComponent(jScrollPane2)
-               .addGroup(jPanel2Layout.createSequentialGroup()
+               .addGroup(LocationsPanelLayout.createSequentialGroup()
                   .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                     .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                     .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-               .addGroup(jPanel2Layout.createSequentialGroup()
-                  .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                  .addGroup(LocationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                     .addComponent(RemoveWayButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                     .addComponent(AddWayButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+               .addGroup(LocationsPanelLayout.createSequentialGroup()
+                  .addGroup(LocationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                     .addComponent(jLabel1)
+                     .addComponent(jLabel2)
+                     .addComponent(jLabel6))
+                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                  .addGroup(LocationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                     .addComponent(AreasComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                     .addGroup(LocationsPanelLayout.createSequentialGroup()
+                        .addComponent(LocationsComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(AddLocationButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(RemoveLocationButton))
+                     .addGroup(LocationsPanelLayout.createSequentialGroup()
+                        .addComponent(LocationTitleTextField)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(RenameLocationButton))))
+               .addGroup(LocationsPanelLayout.createSequentialGroup()
+                  .addGroup(LocationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                      .addComponent(jLabel3)
                      .addComponent(jLabel5))
                   .addGap(0, 0, Short.MAX_VALUE)))
             .addContainerGap())
       );
-      jPanel2Layout.setVerticalGroup(
-         jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-         .addGroup(jPanel2Layout.createSequentialGroup()
+      LocationsPanelLayout.setVerticalGroup(
+         LocationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+         .addGroup(LocationsPanelLayout.createSequentialGroup()
             .addContainerGap()
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addGroup(LocationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                .addComponent(AreasComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                .addComponent(jLabel1))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addGroup(LocationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                .addComponent(LocationsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                .addComponent(jLabel2)
-               .addComponent(jButton8))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+               .addComponent(RemoveLocationButton)
+               .addComponent(AddLocationButton))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(LocationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+               .addComponent(LocationTitleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+               .addComponent(jLabel6)
+               .addComponent(RenameLocationButton))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jLabel3)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addGroup(LocationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                .addComponent(jLabel4)
-               .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+               .addComponent(LocationImageURLTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jLabel5)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-               .addGroup(jPanel2Layout.createSequentialGroup()
-                  .addComponent(jButton6)
+            .addGroup(LocationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+               .addGroup(LocationsPanelLayout.createSequentialGroup()
+                  .addComponent(AddWayButton)
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addComponent(jButton7)
-                  .addGap(0, 110, Short.MAX_VALUE))
-               .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-            .addGap(34, 34, 34))
+                  .addComponent(RemoveWayButton))
+               .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE))
+            .addContainerGap())
       );
 
-      jTabbedPane1.addTab("Locations", jPanel2);
+      MainTabbedPane.addTab("Locations", LocationsPanel);
 
-      jButton4.setText("Load areas");
-      jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+      LoadAreasButton.setText("Load areas");
+      LoadAreasButton.addMouseListener(new java.awt.event.MouseAdapter() {
          public void mouseClicked(java.awt.event.MouseEvent evt) {
             LoadAreas(evt);
          }
       });
 
-      jButton5.setText("Load locations");
-      jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+      LoadLocationsButton.setText("Load locations");
+      LoadLocationsButton.setEnabled(false);
+      LoadLocationsButton.addMouseListener(new java.awt.event.MouseAdapter() {
          public void mouseClicked(java.awt.event.MouseEvent evt) {
             LoadLocations(evt);
          }
@@ -275,9 +299,9 @@ public class MainFrame extends javax.swing.JFrame {
          }
       });
 
-      jButton9.setText("Save locations");
-      jButton9.setEnabled(false);
-      jButton9.addMouseListener(new java.awt.event.MouseAdapter() {
+      SaveLocationsButton.setText("Save locations");
+      SaveLocationsButton.setEnabled(false);
+      SaveLocationsButton.addMouseListener(new java.awt.event.MouseAdapter() {
          public void mouseClicked(java.awt.event.MouseEvent evt) {
             SaveLocations(evt);
          }
@@ -290,15 +314,15 @@ public class MainFrame extends javax.swing.JFrame {
          .addGroup(layout.createSequentialGroup()
             .addContainerGap()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-               .addComponent(jTabbedPane1)
+               .addComponent(MainTabbedPane)
                .addGroup(layout.createSequentialGroup()
-                  .addComponent(jButton4)
+                  .addComponent(LoadAreasButton)
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addComponent(jButton5)
+                  .addComponent(LoadLocationsButton)
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                   .addComponent(SaveAreasButton)
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addComponent(jButton9)))
+                  .addComponent(SaveLocationsButton)))
             .addContainerGap())
       );
       layout.setVerticalGroup(
@@ -306,20 +330,20 @@ public class MainFrame extends javax.swing.JFrame {
          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
             .addContainerGap()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-               .addComponent(jButton4)
-               .addComponent(jButton5)
+               .addComponent(LoadAreasButton)
+               .addComponent(LoadLocationsButton)
                .addComponent(SaveAreasButton)
-               .addComponent(jButton9))
+               .addComponent(SaveLocationsButton))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(MainTabbedPane)
+            .addContainerGap())
       );
 
       pack();
    }// </editor-fold>//GEN-END:initComponents
 
 	private void updateTitle() {
-		switch(jTabbedPane1.getSelectedIndex()) {
+		switch(MainTabbedPane.getSelectedIndex()) {
 			case 0:
 				setTitle(defaultTitle + " - " + (areasFile!=null?areasFile.file.getAbsolutePath():"Unsaved") );
 				break;
@@ -334,6 +358,104 @@ public class MainFrame extends javax.swing.JFrame {
 		if (!af.approved) return;
 		areasFile = af;
 		areas = areasFile.getAreas();
+		LoadLocationsButton.setEnabled(true);
+		AreasTable.updateUI();
+		AreasComboBox.updateUI();
+		updateTitle();
+   }//GEN-LAST:event_LoadAreas
+
+	public Area getSelectedArea() {
+		int row = AreasTable.getSelectedRow();
+		if (row == -1 || row > areas.areas.size() - 1) return null;
+		else return areas.areas.get(row);
+	}
+
+   private void LoadLocations(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoadLocations
+		if ( !((javax.swing.JButton) evt.getSource()).isEnabled() ) return;
+
+		LocationsFile lf = new LocationsFile(CommFile.OPEN);
+		if (!lf.approved) return;
+		locationsFile = lf;
+		areas.attachLocations(locationsFile.getLocations());
+		LocationsComboBox.updateUI();
+		SaveAreasButton.setEnabled(true);
+		SaveLocationsButton.setEnabled(true);
+   }//GEN-LAST:event_LoadLocations
+
+   private void AddNewArea(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddNewArea
+		if (areas.areas.isEmpty()) {
+			SaveAreasButton.setEnabled(true);
+			updateTitle();
+		}
+		int sel = areas.addNewArea(AreasTable.getSelectedRow());
+		AreasTable.setRowSelectionInterval(sel, sel);
+		AreasTable.updateUI();
+		AreasComboBox.updateUI();
+   }//GEN-LAST:event_AddNewArea
+
+   private void RemoveArea(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RemoveArea
+		int sel = areas.removeAreas(AreasTable.getSelectedRows());
+		if (sel > -1) AreasTable.setRowSelectionInterval(sel, sel);
+		AreasTable.updateUI();
+		AreasComboBox.updateUI();
+   }//GEN-LAST:event_RemoveArea
+
+   private void SaveAreas(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveAreas
+		if ( !((javax.swing.JButton) evt.getSource()).isEnabled() ) return;
+
+		AreasFile af;
+		if (areasFile == null) {
+			System.out.println("areasFile is null");
+			af = new AreasFile(CommFile.SAVE);
+			if (!af.approved) return;
+			areasFile = af;
+		}
+		areasFile.writeAreas(areas);
+   }//GEN-LAST:event_SaveAreas
+
+   private void SaveLocations(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveLocations
+		if ( !((javax.swing.JButton) evt.getSource()).isEnabled() ) return;
+
+		LocationsFile lf;
+		if (locationsFile == null) {
+			lf = new LocationsFile(CommFile.SAVE);
+			if (!lf.approved) return;
+			locationsFile = lf;
+		}
+		locationsFile.writeLocations(areas.getLocations());
+   }//GEN-LAST:event_SaveLocations
+
+	/**
+	 * @param args the command line arguments
+	 */
+	public static void main(String args[]) {
+		/* Set the Nimbus look and feel */
+		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+		/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+		 * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+		*/
+		try {
+			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					javax.swing.UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		}
+		catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+			java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+		}
+		//</editor-fold>
+
+		/* Create and display the form */
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				(new MainFrame()).setVisible(true);
+			}
+		});
+	}
+
+	final void setUIModels() {
 		AreasTable.setModel(new DefaultTableModel() {
 			public Class<?> getColumnClass(int columnIndex) {
 				return String.class;
@@ -385,7 +507,7 @@ public class MainFrame extends javax.swing.JFrame {
 			@Override
 			public Object getSelectedItem() {
 				int row = AreasTable.getSelectedRow();
-				if (row == -1) return "<Select area>";
+				if (row == -1 || row > areas.areas.size() - 1) return "<Select area>";
 				return AreasTable.getValueAt(row, Area.TITLE);
 			}
 
@@ -393,6 +515,7 @@ public class MainFrame extends javax.swing.JFrame {
 			public void setSelectedItem(Object anObject) {
 				int ind = areas.getRowNumberOf(anObject, Area.TITLE);
 				AreasTable.setRowSelectionInterval(ind, ind);
+				LocationsComboBox.updateUI();
 			}
 		});
 		LocationsComboBox.setModel(new DefaultComboBoxModel() {
@@ -401,169 +524,77 @@ public class MainFrame extends javax.swing.JFrame {
 			public void setSelectedItem(Object anItem) {
 				if (getSelectedArea() == null)
 					return;
-				else if (anItem == addNew) {
-					int ind = areas.areas.indexOf(getSelectedArea());
-					getSelectedArea().locs.add(ind);
-					fireIntervalAdded(this, ind, ind);
-				}
-				else
+				else {
 					getSelectedArea().locs.selected = getSelectedArea().locs.getIndexOf(anItem, Location.TITLE);
+					LocationTitleTextField.setText((String) anItem);
+					LocationDescriptionTextArea.setText(getSelectedArea().locs.getSelected().description);
+					LocationImageURLTextField.setText(getSelectedArea().locs.getSelected().imageURL);
+				}
 			}
 
 			@Override
 			public Object getSelectedItem() {
-				if (getSelectedArea() == null || getSelectedArea().locs == null) return "<Empty>";
+				if (getSelectedArea() == null || getSelectedArea().locs == null || getSelectedArea().locs.locs.isEmpty()) return "<Empty>";
 				else {
 					int sel = getSelectedArea().locs.selected;
-					if (sel == -1) return "<Select location>";
-					return getSelectedArea().locs.locs.get(sel).getParameter(Location.TITLE);
+					if (sel == -1) {
+						LocationTitleTextField.setText("");
+						LocationDescriptionTextArea.setText("");
+						LocationImageURLTextField.setText("");
+						return "<Select location>";
+					}
+					else {
+						LocationTitleTextField.setText((String) getSelectedArea().locs.getSelected().title);
+						LocationDescriptionTextArea.setText(getSelectedArea().locs.getSelected().description);
+						LocationImageURLTextField.setText(getSelectedArea().locs.getSelected().imageURL);
+						return getSelectedArea().locs.locs.get(sel).getParameter(Location.TITLE);
+					}
 				}
 			}
 
 			@Override
 			public int getSize() {
-				if (getSelectedArea() == null || getSelectedArea().locs == null) return 1;
-				else return getSelectedArea().locs.locs.size() + 1;
+				if (getSelectedArea() == null || getSelectedArea().locs == null) return 0;
+				else return getSelectedArea().locs.locs.size();
 			}
 
 			@Override
 			public Object getElementAt(int index) {
-				if (index == getSize() - 1) return addNew;
 				return getSelectedArea().locs.locs.get(index).getParameter(Location.TITLE);
 			}
 		});
-		SaveAreasButton.setEnabled(true);
-		updateTitle();
-   }//GEN-LAST:event_LoadAreas
-
-	public Area getSelectedArea() {
-		int row = AreasTable.getSelectedRow();
-		if (row == -1) return null;
-		else return areas.areas.get(row);
 	}
-
-   private void LoadLocations(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoadLocations
-		LocationsFile lf = new LocationsFile(CommFile.OPEN);
-		if (!lf.approved) return;
-		locationsFile = lf;
-		areas.attachLocations(locationsFile.getLocations());
-		//jTable1.setModel(locations);
-   }//GEN-LAST:event_LoadLocations
-
-   private void AddNewArea(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddNewArea
-		if (areas == null) {
-//			AreasTable.setModel(areas);
-			SaveAreasButton.setEnabled(true);
-			updateTitle();
-		}
-		int sel = areas.addNewArea(AreasTable.getSelectedRow());
-		AreasTable.setRowSelectionInterval(sel, sel);
-		AreasTable.updateUI();
-   }//GEN-LAST:event_AddNewArea
-
-   private void RemoveArea(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RemoveArea
-		int sel = areas.removeAreas(AreasTable.getSelectedRows());
-		AreasTable.setRowSelectionInterval(sel, sel);
-		AreasTable.updateUI();
-   }//GEN-LAST:event_RemoveArea
-
-   private void SaveAreas(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveAreas
-		AreasFile af;
-		if (areasFile == null) {
-			System.out.println("areasFile is null");
-			af = new AreasFile(CommFile.SAVE);
-			if (!af.approved) return;
-			areasFile = af;
-		}
-		areasFile.writeAreas(areas);
-   }//GEN-LAST:event_SaveAreas
-
-   private void SaveLocations(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveLocations
-		LocationsFile lf;
-		if (locationsFile == null) {
-			lf = new LocationsFile(CommFile.SAVE);
-			if (!lf.approved) return;
-			locationsFile = lf;
-		}
-		locationsFile.writeLocations(areas.getLocations());
-   }//GEN-LAST:event_SaveLocations
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[])
-    {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try
-        {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
-            {
-                if ("Nimbus".equals(info.getName()))
-                {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        }
-        catch (ClassNotFoundException ex)
-        {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        catch (InstantiationException ex)
-        {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        catch (IllegalAccessException ex)
-        {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        catch (javax.swing.UnsupportedLookAndFeelException ex)
-        {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-               mf = new MainFrame();
-					mf.setVisible(true);
-   }
-        });
-    }
    // Variables declaration - do not modify//GEN-BEGIN:variables
+   private javax.swing.JButton AddAreaButton;
+   private javax.swing.JButton AddLocationButton;
+   private javax.swing.JButton AddWayButton;
    private javax.swing.JComboBox AreasComboBox;
+   private javax.swing.JPanel AreasPanel;
+   private javax.swing.JScrollPane AreasScrollPane;
    private javax.swing.JTable AreasTable;
+   private javax.swing.JButton LoadAreasButton;
+   private javax.swing.JButton LoadLocationsButton;
+   private javax.swing.JTextArea LocationDescriptionTextArea;
+   private javax.swing.JTextField LocationImageURLTextField;
+   private javax.swing.JTextField LocationTitleTextField;
    private javax.swing.JComboBox LocationsComboBox;
+   private javax.swing.JPanel LocationsPanel;
+   private javax.swing.JTabbedPane MainTabbedPane;
+   private javax.swing.JButton RemoveAreaButton;
+   private javax.swing.JButton RemoveLocationButton;
+   private javax.swing.JButton RemoveWayButton;
+   private javax.swing.JButton RenameLocationButton;
    private javax.swing.JButton SaveAreasButton;
-   private javax.swing.JButton jButton1;
-   private javax.swing.JButton jButton2;
+   private javax.swing.JButton SaveLocationsButton;
+   private javax.swing.JTable WaysTable;
    private javax.swing.JButton jButton3;
-   private javax.swing.JButton jButton4;
-   private javax.swing.JButton jButton5;
-   private javax.swing.JButton jButton6;
-   private javax.swing.JButton jButton7;
-   private javax.swing.JButton jButton8;
-   private javax.swing.JButton jButton9;
    private javax.swing.JLabel jLabel1;
    private javax.swing.JLabel jLabel2;
    private javax.swing.JLabel jLabel3;
    private javax.swing.JLabel jLabel4;
    private javax.swing.JLabel jLabel5;
-   private javax.swing.JPanel jPanel1;
-   private javax.swing.JPanel jPanel2;
+   private javax.swing.JLabel jLabel6;
    private javax.swing.JScrollPane jScrollPane2;
    private javax.swing.JScrollPane jScrollPane3;
-   private javax.swing.JScrollPane jScrollPane4;
-   private javax.swing.JTabbedPane jTabbedPane1;
-   private javax.swing.JTable jTable1;
-   private javax.swing.JTextArea jTextArea1;
-   private javax.swing.JTextField jTextField2;
    // End of variables declaration//GEN-END:variables
 }

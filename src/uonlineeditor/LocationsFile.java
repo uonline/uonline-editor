@@ -1,6 +1,7 @@
 package uonlineeditor;
 
 import au.com.bytecode.opencsv.CSVReader;
+import au.com.bytecode.opencsv.CSVWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ public class LocationsFile extends CommFile {
 }
 
 	List<Location> getLocations() {
-		List<String[]> csvLocations = null;
+		List<String[]> csvLocations = new ArrayList<>();
 		try {
 			CSVReader cr = getCsvReader();
 			csvLocations = cr.readAll();
@@ -31,15 +32,20 @@ public class LocationsFile extends CommFile {
 		} catch (IOException ex) {
 			Logger.getLogger(AreasFile.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		ArrayList<Location> ll = null;
-		for (String[] scvStr: csvLocations) {
-			ll.add(new Location(scvStr));
+		ArrayList<Location> ll = new ArrayList<>();
+		for (String[] csvStr: csvLocations) {
+			ll.add(new Location(csvStr));
 		}
 		return ll;
 	}
 
-	void writeLocations(List<Location> l) {
-		//
+	void writeLocations(List<Location> ll) {
+		CSVWriter cw = getCsvWriter();
+		cw.writeAll(Locations.asData(ll));
+		try {
+			cw.flush();
+			cw.close();
+		} catch (IOException ex) { Logger.getLogger(AreasFile.class.getName()).log(Level.SEVERE, null, ex); }
 	}
 
 }

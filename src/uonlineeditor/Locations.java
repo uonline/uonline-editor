@@ -27,6 +27,14 @@ public class Locations {
 		}
 	}
 
+	static List<String[]> asData(List<Location> ll) {
+		List<String[]> csv = new ArrayList<>();
+		for(Location l: ll) {
+			csv.add(l.asData());
+		}
+		return csv;
+	}
+
 	void add(Location l) {
 		locs.add(l);
 	}
@@ -43,6 +51,10 @@ public class Locations {
 			}
 		}
 		return -1;
+	}
+
+	Location getSelected() {
+		return locs.get(selected);
 	}
 
 }

@@ -24,9 +24,7 @@ public class Areas {
 	List<Location> getLocations() {
 		ArrayList<Location> ll = new ArrayList<>();
 		for (Area a: areas) {
-			for(Location l: a.locs.locs) {
-				ll.add(l);
-			}
+				ll.addAll(a.locs.locs);
 		}
 		return ll;
 	}
@@ -61,7 +59,7 @@ public class Areas {
 	}
 
 	int addNewArea(int index) {
-		if (index == -1) {
+		if (index == -1 || index > areas.size() - 1) {
 			areas.add(new Area(++lastId));
 			return 0;
 		}
@@ -80,7 +78,7 @@ public class Areas {
 	}
 
 	int removeAreas(int[] index) {
-		if (areas.size()== 1) return 0;
+		if (areas.size() < 1) return -1;
 		for (int i = index.length - 1; i >= 0 ; i--) {
 			removeArea(index[i]);
 		}
