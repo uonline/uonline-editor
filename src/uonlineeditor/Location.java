@@ -16,12 +16,12 @@ public class Location {
 	public static final int IMAGE_URL = 6;
 
 	public String title = "Location";
-	public Ways ways;
+	public Ways ways = new Ways();
 	public String description = "";
 	public int id;
 	public int area;
 	public int isDefault = 0;
-	public String imageURL;
+	public String imageURL = "";
 
 	Location(int areaId, int lastId) {
 		id = lastId;
@@ -34,7 +34,7 @@ public class Location {
 	}
 
 	String[] asData() {
-		String[] data = {title, ways.asData(), description, String.valueOf(id), String.valueOf(area), String.valueOf(isDefault), imageURL};
+		String[] data = new String[] {title, ways.asData(), description, String.valueOf(id), String.valueOf(area), String.valueOf(isDefault), imageURL};
 		return data;
 	}
 

@@ -1,25 +1,28 @@
 package uonlineeditor;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author houjing
  */
 public class Ways {
 
-	public Way wlist[];
+	public ArrayList<Way> wlist = new ArrayList<>();
+
+	Ways() {}
 
 	public Ways(String s) {
 		String[] sl = s.split("\\|");
-		wlist = new Way[sl.length];
 		for (int i = 0; i < sl.length; i++) {
-			wlist[i] = new Way(sl[i]);
+			wlist.add(new Way(sl[i]));
 		}
 	}
 
 	public String asData() {
-		String[] t = new String[wlist.length];
-		for (int i = 0; i < wlist.length; i++) {
-			t[i] = wlist[i].AsData();
+		String[] t = new String[wlist.size()];
+		for (int i = 0; i < wlist.size(); i++) {
+			t[i] = wlist.get(i).AsData();
 		}
 		return ExtString.join(t, "|");
 	}
