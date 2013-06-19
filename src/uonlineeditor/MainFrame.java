@@ -1,10 +1,18 @@
 package uonlineeditor;
 
+import java.awt.event.ComponentAdapter;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultSingleSelectionModel;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelListener;
+import javax.swing.plaf.basic.BasicSliderUI;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -581,6 +589,12 @@ public class MainFrame extends javax.swing.JFrame {
 				areas.areas.get(rowIndex).setParameter(value, columnIndex);
 			}
 		});
+		AreasTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				WaysTable.updateUI();
+			}
+		});
 		WaysTable.setModel(new DefaultTableModel() {
 			@Override
 			public Class<?> getColumnClass(int columnIndex) {
@@ -658,6 +672,7 @@ public class MainFrame extends javax.swing.JFrame {
 				int ind = areas.getRowNumberOf(anObject, Area.TITLE);
 				AreasTable.setRowSelectionInterval(ind, ind);
 				LocationsComboBox.updateUI();
+				WaysTable.updateUI();
 			}
 		});
 		LocationsComboBox.setModel(new DefaultComboBoxModel() {
@@ -716,6 +731,20 @@ public class MainFrame extends javax.swing.JFrame {
 			public void caretUpdate(CaretEvent e) {
 				if (getSelectedArea() == null || getSelectedArea().locs.getSelected() == null) return;
 				getSelectedArea().locs.getSelected().title = LocationTitleTextField.getText();
+			}
+		});
+		LocationDescriptionTextArea.addCaretListener(new CaretListener() {
+			@Override
+			public void caretUpdate(CaretEvent e) {
+				if (getSelectedArea() == null || getSelectedArea().locs.getSelected() == null) return;
+				getSelectedArea().locs.getSelected().description = LocationDescriptionTextArea.getText();
+			}
+		});
+		LocationImageURLTextField.addCaretListener(new CaretListener() {
+			@Override
+			public void caretUpdate(CaretEvent e) {
+				if (getSelectedArea() == null || getSelectedArea().locs.getSelected() == null) return;
+				getSelectedArea().locs.getSelected().imageURL = LocationImageURLTextField.getText();
 			}
 		});
 //		MainTabbedPane.setModel(null);
