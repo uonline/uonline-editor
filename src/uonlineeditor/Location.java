@@ -21,7 +21,7 @@ public class Location {
 	public int id;
 	public int area;
 	public int isDefault = 0;
-	public String imageURL = "";
+	public String imageURL = "http://";
 
 	Location(int areaId, int lastId) {
 		id = lastId;

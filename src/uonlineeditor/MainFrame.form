@@ -373,11 +373,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Add"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="AddWay"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="RemoveWayButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Remove"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="RemoveWay"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

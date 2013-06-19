@@ -78,8 +78,9 @@ public class Areas {
 	}
 
 	int removeAreas(int[] index) {
-		if (areas.size() == -1) return -1;
+		if (index.length == 0 || areas.size() == -1) return -1;
 		for (int i = index.length - 1; i >= 0 ; i--) {
+			if (index[i] >= areas.size()) continue;
 			removeArea(index[i]);
 		}
 		return index[index.length-1] == areas.size() + 1 - index.length ? areas.size() - 1 : index[0];

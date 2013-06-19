@@ -1,16 +1,10 @@
 package uonlineeditor;
 
-import java.awt.event.ActionEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+import javax.swing.DefaultSingleSelectionModel;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.TextAction;
 
 /**
  *
@@ -22,8 +16,6 @@ public class MainFrame extends javax.swing.JFrame {
 	private boolean lFileOpened = false;
 	private boolean areasChanged = false;
 	private boolean locationsChanged = false;
-
-	static MainFrame mf;
 
 	Areas areas = new Areas();
 	AreasFile areasFile;
@@ -45,6 +37,7 @@ public class MainFrame extends javax.swing.JFrame {
 
 		defaultTitle = getTitle();
 		setUIModels();
+		update();
 	}
 
 
@@ -205,8 +198,18 @@ public class MainFrame extends javax.swing.JFrame {
       jScrollPane3.setViewportView(WaysTable);
 
       AddWayButton.setText("Add");
+      AddWayButton.addMouseListener(new java.awt.event.MouseAdapter() {
+         public void mouseClicked(java.awt.event.MouseEvent evt) {
+            AddWay(evt);
+         }
+      });
 
       RemoveWayButton.setText("Remove");
+      RemoveWayButton.addMouseListener(new java.awt.event.MouseAdapter() {
+         public void mouseClicked(java.awt.event.MouseEvent evt) {
+            RemoveWay(evt);
+         }
+      });
 
       javax.swing.GroupLayout LocationsPanelLayout = new javax.swing.GroupLayout(LocationsPanel);
       LocationsPanel.setLayout(LocationsPanelLayout);
@@ -368,6 +371,30 @@ public class MainFrame extends javax.swing.JFrame {
 		}
 	}
 
+	private void updateButtons() {
+		if (areas.areas.isEmpty()) {
+			SaveAreasButton.setEnabled(false);
+			SaveLocationsButton.setEnabled(false);
+			LoadLocationsButton.setEnabled(false);
+		}
+		else {
+			LoadLocationsButton.setEnabled(true);
+			if (!areas.getLocations().isEmpty()) {
+				SaveAreasButton.setEnabled(true);
+				SaveLocationsButton.setEnabled(true);
+			}
+			else {
+				SaveAreasButton.setEnabled(false);
+				SaveLocationsButton.setEnabled(false);
+			}
+		}
+	}
+
+	private void update() {
+		updateButtons();
+		updateTitle();
+	}
+
    private void LoadAreas(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoadAreas
 		AreasFile af = new AreasFile(CommFile.OPEN);
 		if (!af.approved) return;
@@ -393,19 +420,16 @@ public class MainFrame extends javax.swing.JFrame {
 		locationsFile = lf;
 		areas.attachLocations(locationsFile.getLocations());
 		LocationsComboBox.updateUI();
-		SaveAreasButton.setEnabled(true);
-		SaveLocationsButton.setEnabled(true);
+		WaysTable.updateUI();
+		update();
    }//GEN-LAST:event_LoadLocations
 
    private void AddArea(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddArea
-		if (areas.areas.isEmpty()) {
-			SaveAreasButton.setEnabled(true);
-			updateTitle();
-		}
 		int sel = areas.addArea(AreasTable.getSelectedRow());
 		AreasTable.setRowSelectionInterval(sel, sel);
 		AreasTable.updateUI();
 		AreasComboBox.updateUI();
+		update();
    }//GEN-LAST:event_AddArea
 
    private void RemoveArea(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RemoveArea
@@ -413,6 +437,7 @@ public class MainFrame extends javax.swing.JFrame {
 		if (sel > -1) AreasTable.setRowSelectionInterval(sel, sel);
 		AreasTable.updateUI();
 		AreasComboBox.updateUI();
+		update();
    }//GEN-LAST:event_RemoveArea
 
    private void SaveAreas(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveAreas
@@ -442,23 +467,35 @@ public class MainFrame extends javax.swing.JFrame {
 
    private void AddLocation(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddLocation
 		if (getSelectedArea() == null) return;
-		if (areas.getLocations().isEmpty()) {
-			SaveLocationsButton.setEnabled(true);
-			updateTitle();
-		}
 		getSelectedArea().locs.addLocation();
 		LocationsComboBox.updateUI();
+		update();
    }//GEN-LAST:event_AddLocation
 
    private void RemoveLocation(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RemoveLocation
 		if (getSelectedArea() == null) return;
 		getSelectedArea().locs.removeLocation();
 		LocationsComboBox.updateUI();
-		if (areas.getLocations().isEmpty()) {
-			SaveLocationsButton.setEnabled(false);
-			updateTitle();
-		}
+		update();
    }//GEN-LAST:event_RemoveLocation
+
+   private void AddWay(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddWay
+      if (getSelectedArea() == null || getSelectedArea().locs.getSelected() == null) return;
+		int sel = getSelectedArea().locs.getSelected().ways.addWay(WaysTable.getSelectedRow());
+		WaysTable.setRowSelectionInterval(sel, sel);
+		WaysTable.updateUI();
+//		AreasComboBox.updateUI();
+//		update();
+   }//GEN-LAST:event_AddWay
+
+   private void RemoveWay(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RemoveWay
+      if (getSelectedArea() == null || getSelectedArea().locs.getSelected() == null) return;
+      int sel = getSelectedArea().locs.getSelected().ways.removeWays(WaysTable.getSelectedRows());
+		if (sel > -1) WaysTable.setRowSelectionInterval(sel, sel);
+		WaysTable.updateUI();
+//		AreasComboBox.updateUI();
+//		update();
+   }//GEN-LAST:event_RemoveWay
 
 	/**
 	 * @param args the command line arguments
@@ -491,15 +528,38 @@ public class MainFrame extends javax.swing.JFrame {
 	}
 
 	final void setUIModels() {
-		AreasTable.setModel(new DefaultTableModel() {
-			public Class<?> getColumnClass(int columnIndex) {
-				return String.class;
+		MainTabbedPane.setModel(new DefaultSingleSelectionModel() {
+			@Override
+			public void setSelectedIndex(int index) {
+				super.setSelectedIndex(index);
+				updateTitle();
+			}
+			@Override
+			public int getSelectedIndex() {
+				if (super.getSelectedIndex() == -1) super.setSelectedIndex(0);
+				return super.getSelectedIndex();
 			}
 
+		});
+		AreasTable.setModel(new DefaultTableModel() {
+			@Override
+			public Class<?> getColumnClass(int columnIndex) {
+				switch(columnIndex){
+					case 0:
+						return String.class;
+					case 1:
+						return Integer.class;
+					default:
+						return null;
+				}
+			}
+
+			@Override
 			public int getColumnCount() {
 				return 2;
 			}
 
+			@Override
 			public String getColumnName(int columnIndex) {
 				switch (columnIndex) {
 					case Area.TITLE:
@@ -511,20 +571,76 @@ public class MainFrame extends javax.swing.JFrame {
 				}
 			}
 
+			@Override
 			public int getRowCount() {
 				return areas.areas == null ? 0 : areas.areas.size();
 			}
 
+			@Override
 			public Object getValueAt(int rowIndex, int columnIndex) {
 				return areas.areas.get(rowIndex).getParameter(columnIndex);
 			}
 
+			@Override
 			public boolean isCellEditable(int rowIndex, int columnIndex) {
 				return true;
 			}
 
+			@Override
 			public void setValueAt(Object value, int rowIndex, int columnIndex) {
 				areas.areas.get(rowIndex).setParameter(value, columnIndex);
+			}
+		});
+		WaysTable.setModel(new DefaultTableModel() {
+			@Override
+			public Class<?> getColumnClass(int columnIndex) {
+				switch(columnIndex){
+					case 0:
+						return String.class;
+					case 1:
+						return Integer.class;
+					default:
+						return null;
+				}
+			}
+
+			@Override
+			public int getColumnCount() {
+				return 2;
+			}
+
+			@Override
+			public String getColumnName(int columnIndex) {
+				switch (columnIndex) {
+					case Way.TEXT:
+						return "Text";
+					case Way.LOCATION_ID:
+						return "Location";
+					default:
+						return "";
+				}
+			}
+
+			@Override
+			public int getRowCount() {
+				if(getSelectedArea() == null || getSelectedArea().locs.getSelected() == null) return 0;
+				Ways ways = getSelectedArea().locs.getSelected().ways;
+				return ways.wlist.size();
+			}
+
+			@Override
+			public Object getValueAt(int rowIndex, int columnIndex) {
+				return getSelectedArea().locs.getSelected().ways.wlist.get(rowIndex).getParameter(columnIndex);
+			}
+
+			@Override
+			public boolean isCellEditable(int rowIndex, int columnIndex) {
+				return true;
+			}
+
+			@Override
+			public void setValueAt(Object value, int rowIndex, int columnIndex) {
+				getSelectedArea().locs.getSelected().ways.wlist.get(rowIndex).setParameter(value, columnIndex);
 			}
 		});
 		AreasComboBox.setModel(new DefaultComboBoxModel() {
@@ -541,6 +657,7 @@ public class MainFrame extends javax.swing.JFrame {
 
 			@Override
 			public Object getSelectedItem() {
+				if (areas.areas.isEmpty()) return "<Empty>";
 				int row = AreasTable.getSelectedRow();
 				if (row == -1 || row > areas.areas.size() - 1) return "<Select area>";
 				return AreasTable.getValueAt(row, Area.TITLE);
@@ -565,6 +682,7 @@ public class MainFrame extends javax.swing.JFrame {
 					LocationDescriptionTextArea.setText(getSelectedArea().locs.getSelected().description);
 					LocationImageURLTextField.setText(getSelectedArea().locs.getSelected().imageURL);
 				}
+				WaysTable.updateUI();
 			}
 
 			@Override
@@ -603,30 +721,11 @@ public class MainFrame extends javax.swing.JFrame {
 				return getSelectedArea().locs.locs.get(index).getParameter(Location.TITLE);
 			}
 		});
-		LocationTitleTextField.getDocument().addDocumentListener(new DocumentListener() {
-
+		LocationTitleTextField.addCaretListener(new CaretListener() {
 			@Override
-			public void insertUpdate(DocumentEvent e) {
+			public void caretUpdate(CaretEvent e) {
 				if (getSelectedArea() == null || getSelectedArea().locs.getSelected() == null) return;
-				try {
-					getSelectedArea().locs.getSelected().title = e.getDocument().getText(0, e.getDocument().getLength());
-				} catch (BadLocationException ex) { Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex); }
-			}
-
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				if (getSelectedArea() == null || getSelectedArea().locs.getSelected() == null) return;
-				try {
-					getSelectedArea().locs.getSelected().title = e.getDocument().getText(0, e.getDocument().getLength());
-				} catch (BadLocationException ex) { Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex); }
-			}
-
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				if (getSelectedArea() == null || getSelectedArea().locs.getSelected() == null) return;
-				try {
-					getSelectedArea().locs.getSelected().title = e.getDocument().getText(0, e.getDocument().getLength());
-				} catch (BadLocationException ex) { Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex); }
+				getSelectedArea().locs.getSelected().title = LocationTitleTextField.getText();
 			}
 		});
 //		MainTabbedPane.setModel(null);
