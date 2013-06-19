@@ -88,5 +88,6 @@ public class Areas {
 
 	public ArrayList<Area> areas = new ArrayList<>();
 	private int lastId = 0;
+	public static int lastLocId;
 
 }

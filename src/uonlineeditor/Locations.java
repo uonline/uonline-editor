@@ -52,15 +52,15 @@ public class Locations {
 
 	void addLocation() {
 		if (selected == -1 || selected > locs.size() - 1) {
-			locs.add(new Location(areaId, lastId++));
+			locs.add(new Location(areaId, Areas.lastLocId++));
 			selected = 0;
 		}
 		else if (locs.size() == selected + 1) {
-			locs.add(new Location(areaId, lastId++));
+			locs.add(new Location(areaId, Areas.lastLocId++));
 			selected = locs.size()-1;
 		}
 		else {
-			locs.add(selected + 1, new Location(areaId, lastId++));
+			locs.add(selected + 1, new Location(areaId, Areas.lastLocId++));
 			selected = selected + 1;
 		}
 	}
