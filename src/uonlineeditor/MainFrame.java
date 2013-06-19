@@ -27,11 +27,6 @@ public class MainFrame extends javax.swing.JFrame {
      * Creates new form MainFrame
      */
 	public MainFrame() {
-//		try {
-//			javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-//			Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-//		}
 		initComponents();
 		setLocation(400, 100);
 
@@ -445,7 +440,6 @@ public class MainFrame extends javax.swing.JFrame {
 
 		AreasFile af;
 		if (areasFile == null) {
-			System.out.println("areasFile is null");
 			af = new AreasFile(CommFile.SAVE);
 			if (!af.approved) return;
 			areasFile = af;
@@ -484,8 +478,6 @@ public class MainFrame extends javax.swing.JFrame {
 		int sel = getSelectedArea().locs.getSelected().ways.addWay(WaysTable.getSelectedRow());
 		WaysTable.setRowSelectionInterval(sel, sel);
 		WaysTable.updateUI();
-//		AreasComboBox.updateUI();
-//		update();
    }//GEN-LAST:event_AddWay
 
    private void RemoveWay(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RemoveWay
@@ -493,8 +485,6 @@ public class MainFrame extends javax.swing.JFrame {
       int sel = getSelectedArea().locs.getSelected().ways.removeWays(WaysTable.getSelectedRows());
 		if (sel > -1) WaysTable.setRowSelectionInterval(sel, sel);
 		WaysTable.updateUI();
-//		AreasComboBox.updateUI();
-//		update();
    }//GEN-LAST:event_RemoveWay
 
 	/**

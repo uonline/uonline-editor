@@ -30,13 +30,11 @@ public abstract class CommFile {
 		fc = new JFileChooser();
 
 		if (mode == OPEN) {
-			System.out.println("open for");
 			fc.setDialogType(JFileChooser.OPEN_DIALOG);
 			fc.setFileFilter(getFileFilter());
 			ret = fc.showDialog(null, null);
 		}
 		else if (mode == SAVE) {
-			System.out.println("saving for");
 			fc.setDialogType(JFileChooser.SAVE_DIALOG);
 			fc.setFileFilter(getFileFilter());
 			ret = fc.showDialog(null, null);
