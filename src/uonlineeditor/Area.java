@@ -20,8 +20,8 @@ public class Area {
 	}
 
 	Area(String[] data) {
-		title = data[0];
-		id = Integer.parseInt(data[1]);
+		title = data[TITLE];
+		id = Integer.parseInt(data[ID]);
 		locs = new Locations(id);
 	}
 

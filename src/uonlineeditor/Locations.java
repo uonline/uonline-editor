@@ -13,7 +13,7 @@ public class Locations {
 	public ArrayList<Location> locs = new ArrayList<>();
 
 	public int areaId;
-	public int lastId = 0;
+	public Integer lastId = 0;
 	public int selected = -1;
 
 	Locations (int areaId) {
@@ -21,7 +21,6 @@ public class Locations {
 	}
 
 	Locations (List<String[]> locs) {
-		//System.out.println("Locations constructor");
 		for (Iterator<String[]> it = locs.iterator(); it.hasNext();) {
 			Location l = new Location(it.next());
 			lastId = Math.max(lastId, l.id);

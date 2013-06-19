@@ -13,7 +13,6 @@ public class Areas {
 	Areas() {}
 
 	Areas (List<String[]> areas) {
-		//System.out.println("Areas constructor");
 		for (Iterator<String[]> it = areas.iterator(); it.hasNext();) {
 			Area ar = new Area(it.next());
 			lastId = Math.max (lastId, (int) ar.getParameter(Area.ID));

@@ -553,7 +553,7 @@ public class MainFrame extends javax.swing.JFrame {
 			public String getColumnName(int columnIndex) {
 				switch (columnIndex) {
 					case Area.TITLE:
-						return "Зона";
+						return "Area";
 					case Area.ID:
 						return "id";
 					default:
