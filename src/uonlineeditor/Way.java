@@ -7,15 +7,19 @@ package uonlineeditor;
 public class Way {
 
 	public int lid;
-	public String desc;
+	public String desc = "Way";
 
 	public static final int TEXT = 0;
 	public static final int LOCATION_ID = 1;
 
+	Way() {}
+
 	Way(String s) {
 		String sa[] = s.split("=");
-		desc = sa[0];
-		lid = Integer.parseInt(sa[1]);
+		if (sa.length > 1) {
+			desc = sa[0];
+			lid = Integer.parseInt(sa[1]);
+		}
 	}
 
 	Way(String lid, String desc) {

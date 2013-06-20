@@ -27,7 +27,7 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="MainTabbedPane" alignment="0" max="32767" attributes="0"/>
+                  <Component id="MainTabbedPane" alignment="0" pref="532" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="LoadAreasButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -78,7 +78,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="AreasScrollPane" pref="539" max="32767" attributes="0"/>
+                      <Component id="AreasScrollPane" pref="430" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="RemoveAreaButton" alignment="1" max="32767" attributes="0"/>
@@ -178,11 +178,11 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="LocationImageURLTextField" pref="553" max="32767" attributes="0"/>
+                              <Component id="LocationImageURLTextField" max="32767" attributes="0"/>
                           </Group>
                           <Component id="jScrollPane2" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jScrollPane3" pref="539" max="32767" attributes="0"/>
+                              <Component id="jScrollPane3" pref="430" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="RemoveWayButton" max="32767" attributes="0"/>
@@ -193,20 +193,16 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="AreasComboBox" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
-                                      <Component id="LocationsComboBox" max="32767" attributes="0"/>
+                                      <Component id="LocationsComboBox" pref="242" max="32767" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="AddLocationButton" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="RemoveLocationButton" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="LocationTitleTextField" max="32767" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="RenameLocationButton" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -214,8 +210,8 @@
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
@@ -238,17 +234,12 @@
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="RemoveLocationButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="AddLocationButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="LocationTitleTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="RenameLocationButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" pref="96" max="32767" attributes="0"/>
+                      <Component id="jScrollPane2" pref="125" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -301,17 +292,13 @@
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="RemoveLocation"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel6">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Title:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="LocationTitleTextField">
-            </Component>
             <Component class="javax.swing.JButton" name="RenameLocationButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Rename"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="RenameLocation"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>

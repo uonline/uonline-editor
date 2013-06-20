@@ -13,6 +13,7 @@ public class Ways {
 	Ways() {}
 
 	Ways(String s) {
+		if (s.equals("")) return;
 		String[] sl = s.split("\\|");
 		for (int i = 0; i < sl.length; i++) {
 			wlist.add(new Way(sl[i]));
@@ -21,15 +22,15 @@ public class Ways {
 
 	int addWay(int ind){
 		if (ind == -1 || ind > wlist.size() - 1) {
-			wlist.add(new Way("0", "Way"));
+			wlist.add(new Way());
 			return 0;
 		}
 		else if (wlist.size() == ind + 1) {
-			wlist.add(new Way("0", "Way"));
+			wlist.add(new Way());
 			return wlist.size()-1;
 		}
 		else {
-			wlist.add(ind + 1, new Way("0", "Way"));
+			wlist.add(ind + 1, new Way());
 			return  ind + 1;
 		}
 	}

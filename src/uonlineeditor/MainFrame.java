@@ -1,18 +1,32 @@
 package uonlineeditor;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.InputMethodListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultSingleSelectionModel;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelListener;
 import javax.swing.plaf.basic.BasicSliderUI;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.text.JTextComponent;
 
 /**
  *
@@ -68,8 +82,6 @@ public class MainFrame extends javax.swing.JFrame {
       LocationsComboBox = new javax.swing.JComboBox();
       AddLocationButton = new javax.swing.JButton();
       RemoveLocationButton = new javax.swing.JButton();
-      jLabel6 = new javax.swing.JLabel();
-      LocationTitleTextField = new javax.swing.JTextField();
       RenameLocationButton = new javax.swing.JButton();
       jLabel3 = new javax.swing.JLabel();
       jScrollPane2 = new javax.swing.JScrollPane();
@@ -129,7 +141,7 @@ public class MainFrame extends javax.swing.JFrame {
          AreasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(AreasPanelLayout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(AreasScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
+            .addComponent(AreasScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(AreasPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                .addComponent(RemoveAreaButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -174,9 +186,12 @@ public class MainFrame extends javax.swing.JFrame {
          }
       });
 
-      jLabel6.setText("Title:");
-
       RenameLocationButton.setText("Rename");
+      RenameLocationButton.addMouseListener(new java.awt.event.MouseAdapter() {
+         public void mouseClicked(java.awt.event.MouseEvent evt) {
+            RenameLocation(evt);
+         }
+      });
 
       jLabel3.setText("Description:");
 
@@ -224,10 +239,10 @@ public class MainFrame extends javax.swing.JFrame {
                .addGroup(LocationsPanelLayout.createSequentialGroup()
                   .addComponent(jLabel4)
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addComponent(LocationImageURLTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE))
+                  .addComponent(LocationImageURLTextField))
                .addComponent(jScrollPane2)
                .addGroup(LocationsPanelLayout.createSequentialGroup()
-                  .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
+                  .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                   .addGroup(LocationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                      .addComponent(RemoveWayButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -235,25 +250,22 @@ public class MainFrame extends javax.swing.JFrame {
                .addGroup(LocationsPanelLayout.createSequentialGroup()
                   .addGroup(LocationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                      .addComponent(jLabel1)
-                     .addComponent(jLabel2)
-                     .addComponent(jLabel6))
+                     .addComponent(jLabel2))
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                   .addGroup(LocationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                      .addComponent(AreasComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                      .addGroup(LocationsPanelLayout.createSequentialGroup()
-                        .addComponent(LocationsComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(LocationsComboBox, 0, 242, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(AddLocationButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(RemoveLocationButton))
-                     .addGroup(LocationsPanelLayout.createSequentialGroup()
-                        .addComponent(LocationTitleTextField)
+                        .addComponent(RemoveLocationButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(RenameLocationButton))))
                .addGroup(LocationsPanelLayout.createSequentialGroup()
                   .addGroup(LocationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                     .addComponent(jLabel3)
-                     .addComponent(jLabel5))
+                     .addComponent(jLabel5)
+                     .addComponent(jLabel3))
                   .addGap(0, 0, Short.MAX_VALUE)))
             .addContainerGap())
       );
@@ -269,16 +281,12 @@ public class MainFrame extends javax.swing.JFrame {
                .addComponent(LocationsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                .addComponent(jLabel2)
                .addComponent(RemoveLocationButton)
-               .addComponent(AddLocationButton))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(LocationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-               .addComponent(LocationTitleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-               .addComponent(jLabel6)
+               .addComponent(AddLocationButton)
                .addComponent(RenameLocationButton))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jLabel3)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(LocationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                .addComponent(jLabel4)
@@ -335,7 +343,7 @@ public class MainFrame extends javax.swing.JFrame {
          .addGroup(layout.createSequentialGroup()
             .addContainerGap()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-               .addComponent(MainTabbedPane)
+               .addComponent(MainTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
                .addGroup(layout.createSequentialGroup()
                   .addComponent(LoadAreasButton)
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -494,6 +502,12 @@ public class MainFrame extends javax.swing.JFrame {
 		if (sel > -1) WaysTable.setRowSelectionInterval(sel, sel);
 		WaysTable.updateUI();
    }//GEN-LAST:event_RemoveWay
+
+   private void RenameLocation(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RenameLocation
+      if (getSelectedArea() == null || getSelectedArea().locs.getSelected() == null) return;
+		LocationsComboBox.setEditable(true);
+		LocationsComboBox.requestFocus(true);
+   }//GEN-LAST:event_RenameLocation
 
 	/**
 	 * @param args the command line arguments
@@ -682,8 +696,10 @@ public class MainFrame extends javax.swing.JFrame {
 				if (getSelectedArea() == null)
 					return;
 				else {
-					getSelectedArea().locs.selected = getSelectedArea().locs.getIndexOf(anItem, Location.TITLE);
-					LocationTitleTextField.setText((String) anItem);
+					int sel = getSelectedArea().locs.getIndexOf(anItem, Location.TITLE);
+					if (sel == -1) getSelectedArea().locs.getSelected().setParameter((String) anItem, Location.TITLE);
+					else getSelectedArea().locs.selected = sel;
+//					LocationTitleTextField.setText((String) anItem);
 					LocationDescriptionTextArea.setText(getSelectedArea().locs.getSelected().description);
 					LocationImageURLTextField.setText(getSelectedArea().locs.getSelected().imageURL);
 				}
@@ -693,7 +709,7 @@ public class MainFrame extends javax.swing.JFrame {
 			@Override
 			public Object getSelectedItem() {
 				if (getSelectedArea() == null || getSelectedArea().locs == null || getSelectedArea().locs.locs.isEmpty()) {
-					LocationTitleTextField.setText("");
+//					LocationTitleTextField.setText("");
 					LocationDescriptionTextArea.setText("");
 					LocationImageURLTextField.setText("");
 					return "<Empty>";
@@ -701,13 +717,13 @@ public class MainFrame extends javax.swing.JFrame {
 				else {
 					int sel = getSelectedArea().locs.selected;
 					if (sel == -1) {
-						LocationTitleTextField.setText("");
+//						LocationTitleTextField.setText("");
 						LocationDescriptionTextArea.setText("");
 						LocationImageURLTextField.setText("");
 						return "<Select location>";
 					}
 					else {
-						LocationTitleTextField.setText((String) getSelectedArea().locs.getSelected().title);
+//						LocationTitleTextField.setText((String) getSelectedArea().locs.getSelected().title);
 						LocationDescriptionTextArea.setText(getSelectedArea().locs.getSelected().description);
 						LocationImageURLTextField.setText(getSelectedArea().locs.getSelected().imageURL);
 						return getSelectedArea().locs.locs.get(sel).getParameter(Location.TITLE);
@@ -726,13 +742,26 @@ public class MainFrame extends javax.swing.JFrame {
 				return getSelectedArea().locs.locs.get(index).getParameter(Location.TITLE);
 			}
 		});
-		LocationTitleTextField.addCaretListener(new CaretListener() {
+		LocationsComboBox.addActionListener(new ActionListener() {
 			@Override
-			public void caretUpdate(CaretEvent e) {
-				if (getSelectedArea() == null || getSelectedArea().locs.getSelected() == null) return;
-				getSelectedArea().locs.getSelected().title = LocationTitleTextField.getText();
+			public void actionPerformed(ActionEvent e) {
+				LocationsComboBox.setEditable(false);
 			}
 		});
+//		LocationTitleTextField.addCaretListener(new CaretListener() {
+//			@Override
+//			public void caretUpdate(CaretEvent e) {
+//				if (getSelectedArea() == null || getSelectedArea().locs.getSelected() == null) return;
+//				getSelectedArea().locs.getSelected().title = LocationTitleTextField.getText();
+//			}
+//		});
+//		LocationTitleTextField.addCaretListener(new CaretListener() {
+//			@Override
+//			public void caretUpdate(CaretEvent e) {
+//				if (getSelectedArea() == null || getSelectedArea().locs.getSelected() == null) return;
+//				getSelectedArea().locs.getSelected().title = LocationTitleTextField.getText();
+//			}
+//		});
 		LocationDescriptionTextArea.addCaretListener(new CaretListener() {
 			@Override
 			public void caretUpdate(CaretEvent e) {
@@ -761,7 +790,6 @@ public class MainFrame extends javax.swing.JFrame {
    private javax.swing.JButton LoadLocationsButton;
    private javax.swing.JTextArea LocationDescriptionTextArea;
    private javax.swing.JTextField LocationImageURLTextField;
-   private javax.swing.JTextField LocationTitleTextField;
    private javax.swing.JComboBox LocationsComboBox;
    private javax.swing.JPanel LocationsPanel;
    private javax.swing.JTabbedPane MainTabbedPane;
@@ -778,7 +806,6 @@ public class MainFrame extends javax.swing.JFrame {
    private javax.swing.JLabel jLabel3;
    private javax.swing.JLabel jLabel4;
    private javax.swing.JLabel jLabel5;
-   private javax.swing.JLabel jLabel6;
    private javax.swing.JScrollPane jScrollPane2;
    private javax.swing.JScrollPane jScrollPane3;
    // End of variables declaration//GEN-END:variables
