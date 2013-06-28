@@ -16,7 +16,7 @@ public class Location {
 	public static final int IMAGE_URL = 6;
 
 	public String title = "Location";
-	public Ways ways = new Ways();
+	public Ways ways;
 	public String description = "";
 	public int id;
 	public int area;
@@ -27,6 +27,7 @@ public class Location {
 		id = lastId;
 		this.area = areaId;
 		title += lastId;
+		ways = new Ways(id);
 	}
 
 	Location(String[] data) {
@@ -89,6 +90,10 @@ public class Location {
 			default:
 				return "";
 		}
+	}
+
+	Way getSelectedWay() {
+		return ways.getSelectedWay();
 	}
 
 }

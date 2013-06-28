@@ -25,6 +25,10 @@ public class Area {
 		locs = new Locations(id);
 	}
 
+	Location getSelectedLocation() {
+		return locs.getSelected();
+	}
+
 	String[] asData() {
 		String[] data = {title, String.valueOf(id)};
 		return data;

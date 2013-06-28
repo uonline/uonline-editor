@@ -1,5 +1,9 @@
 package uonlineeditor;
 
+import javax.swing.ComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.event.ListDataListener;
+
 /**
  *
  * @author houjing
@@ -12,7 +16,41 @@ public class Way {
 	public static final int TEXT = 0;
 	public static final int LOCATION_ID = 1;
 
-	Way() {}
+	JComboBox cb = new JComboBox(new ComboBoxModel() {
+
+		@Override
+		public void setSelectedItem(Object anItem) {
+			lid = Areas.getLocationId(anItem);
+		}
+
+		@Override
+		public Object getSelectedItem() {
+			return Areas.getLocationById(lid);
+		}
+
+		@Override
+		public int getSize() {
+			if (MainFrame.getSelectedArea() == null || MainFrame.getSelectedArea().locs == null) return 0;
+			return Areas.getLocations().size();
+		}
+
+		@Override
+		public Object getElementAt(int index) {
+			return Areas.getLocations().get(index).getParameter(Location.TITLE);
+		}
+
+		@Override
+		public void addListDataListener(ListDataListener l) {
+		}
+
+		@Override
+		public void removeListDataListener(ListDataListener l) {
+		}
+	});
+
+	Way(int lid) {
+		this.lid = lid;
+	}
 
 	Way(String s) {
 		String sa[] = s.split("=");
@@ -32,7 +70,7 @@ public class Way {
 			case TEXT:
 				return this.desc;
 			case LOCATION_ID:
-				return this.lid;
+				return this.cb;
 			default:
 				return "";
 		}

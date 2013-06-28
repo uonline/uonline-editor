@@ -2,31 +2,17 @@ package uonlineeditor;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.InputMethodEvent;
-import java.awt.event.InputMethodListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.util.Vector;
+import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultSingleSelectionModel;
+import javax.swing.JComboBox;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelListener;
-import javax.swing.plaf.basic.BasicSliderUI;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.text.JTextComponent;
+import javax.swing.table.TableCellEditor;
 
 /**
  *
@@ -50,6 +36,21 @@ public class MainFrame extends javax.swing.JFrame {
      */
 	public MainFrame() {
 		initComponents();
+		WaysTable = new javax.swing.JTable(){
+			@Override
+			public TableCellEditor getCellEditor(int row, int column) {
+				Object value = getSelectedArea().getSelectedLocation().ways.getValueAt(row, column);
+				switch (column) {
+					case Way.TEXT:
+						return getDefaultEditor(value.getClass());
+					case Way.LOCATION_ID:
+						return new DefaultCellEditor((JComboBox)value);
+					default:
+						return super.getCellEditor(row, column);
+				}
+			}
+		};
+		jScrollPane3.setViewportView(WaysTable);
 		setLocation(400, 100);
 
 		defaultTitle = getTitle();
@@ -343,7 +344,7 @@ public class MainFrame extends javax.swing.JFrame {
          .addGroup(layout.createSequentialGroup()
             .addContainerGap()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-               .addComponent(MainTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
+               .addComponent(MainTabbedPane)
                .addGroup(layout.createSequentialGroup()
                   .addComponent(LoadAreasButton)
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -383,14 +384,14 @@ public class MainFrame extends javax.swing.JFrame {
 	}
 
 	private void updateButtons() {
-		if (areas.areas.isEmpty()) {
+		if (Areas.areas.isEmpty()) {
 			SaveAreasButton.setEnabled(false);
 			SaveLocationsButton.setEnabled(false);
 			LoadLocationsButton.setEnabled(false);
 		}
 		else {
 			LoadLocationsButton.setEnabled(true);
-			if (!areas.getLocations().isEmpty()) {
+			if (!Areas.getLocations().isEmpty()) {
 				SaveAreasButton.setEnabled(true);
 				SaveLocationsButton.setEnabled(true);
 			}
@@ -417,10 +418,10 @@ public class MainFrame extends javax.swing.JFrame {
 		updateTitle();
    }//GEN-LAST:event_LoadAreas
 
-	public Area getSelectedArea() {
+	public static Area getSelectedArea() {
 		int row = AreasTable.getSelectedRow();
-		if (row == -1 || row > areas.areas.size() - 1) return null;
-		else return areas.areas.get(row);
+		if (row == -1 || row > Areas.size() - 1) return null;
+		else return Areas.get(row);
 	}
 
    private void LoadLocations(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoadLocations
@@ -490,17 +491,15 @@ public class MainFrame extends javax.swing.JFrame {
    }//GEN-LAST:event_RemoveLocation
 
    private void AddWay(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddWay
-      if (getSelectedArea() == null || getSelectedArea().locs.getSelected() == null) return;
-		int sel = getSelectedArea().locs.getSelected().ways.addWay(WaysTable.getSelectedRow());
-		WaysTable.setRowSelectionInterval(sel, sel);
-		WaysTable.updateUI();
+      if (getSelectedArea() == null || getSelectedArea().getSelectedLocation() == null) return;
+		getSelectedArea().getSelectedLocation().ways.add();
+		((DefaultTableModel) WaysTable.getModel()).fireTableDataChanged();
    }//GEN-LAST:event_AddWay
 
    private void RemoveWay(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RemoveWay
-      if (getSelectedArea() == null || getSelectedArea().locs.getSelected() == null) return;
-      int sel = getSelectedArea().locs.getSelected().ways.removeWays(WaysTable.getSelectedRows());
-		if (sel > -1) WaysTable.setRowSelectionInterval(sel, sel);
-		WaysTable.updateUI();
+      if (getSelectedArea() == null || getSelectedArea().getSelectedLocation() == null || getSelectedArea().getSelectedLocation().getSelectedWay() == null) return;
+      getSelectedArea().getSelectedLocation().ways.remove();
+		((DefaultTableModel) WaysTable.getModel()).fireTableDataChanged();
    }//GEN-LAST:event_RemoveWay
 
    private void RenameLocation(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RenameLocation
@@ -585,12 +584,12 @@ public class MainFrame extends javax.swing.JFrame {
 
 			@Override
 			public int getRowCount() {
-				return areas.areas == null ? 0 : areas.areas.size();
+				return Areas.areas == null ? 0 : Areas.size();
 			}
 
 			@Override
 			public Object getValueAt(int rowIndex, int columnIndex) {
-				return areas.areas.get(rowIndex).getParameter(columnIndex);
+				return Areas.areas.get(rowIndex).getParameter(columnIndex);
 			}
 
 			@Override
@@ -600,7 +599,7 @@ public class MainFrame extends javax.swing.JFrame {
 
 			@Override
 			public void setValueAt(Object value, int rowIndex, int columnIndex) {
-				areas.areas.get(rowIndex).setParameter(value, columnIndex);
+				Areas.areas.get(rowIndex).setParameter(value, columnIndex);
 			}
 		});
 		AreasTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -642,13 +641,20 @@ public class MainFrame extends javax.swing.JFrame {
 			@Override
 			public int getRowCount() {
 				if(getSelectedArea() == null || getSelectedArea().locs.getSelected() == null) return 0;
-				Ways ways = getSelectedArea().locs.getSelected().ways;
-				return ways.wlist.size();
+				System.out.println(getSelectedArea().locs.getSelected().ways.size());
+				return getSelectedArea().locs.getSelected().ways.size();
 			}
 
 			@Override
 			public Object getValueAt(int rowIndex, int columnIndex) {
-				return getSelectedArea().locs.getSelected().ways.wlist.get(rowIndex).getParameter(columnIndex);
+				switch (columnIndex) {
+					case Way.TEXT:
+						return getSelectedArea().locs.getSelected().ways.get(rowIndex).getParameter(columnIndex);
+					case Way.LOCATION_ID:
+						return ((JComboBox) getSelectedArea().locs.getSelected().ways.get(rowIndex).getParameter(columnIndex)).getSelectedItem();
+					default:
+						return "";
+				}
 			}
 
 			@Override
@@ -658,7 +664,14 @@ public class MainFrame extends javax.swing.JFrame {
 
 			@Override
 			public void setValueAt(Object value, int rowIndex, int columnIndex) {
-				getSelectedArea().locs.getSelected().ways.wlist.get(rowIndex).setParameter(value, columnIndex);
+				switch (columnIndex) {
+					case Way.TEXT:
+						getSelectedArea().locs.getSelected().ways.get(rowIndex).setParameter(value, columnIndex);
+						break;
+					case Way.LOCATION_ID:
+						getSelectedArea().locs.getSelected().ways.get(rowIndex).setParameter(Areas.getLocationId(value), columnIndex);
+						break;
+				}
 			}
 		});
 		AreasComboBox.setModel(new DefaultComboBoxModel() {
@@ -785,7 +798,7 @@ public class MainFrame extends javax.swing.JFrame {
    private javax.swing.JComboBox AreasComboBox;
    private javax.swing.JPanel AreasPanel;
    private javax.swing.JScrollPane AreasScrollPane;
-   private javax.swing.JTable AreasTable;
+   private static javax.swing.JTable AreasTable;
    private javax.swing.JButton LoadAreasButton;
    private javax.swing.JButton LoadLocationsButton;
    private javax.swing.JTextArea LocationDescriptionTextArea;

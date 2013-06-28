@@ -20,7 +20,7 @@ public class Areas {
 		}
 	}
 
-	List<Location> getLocations() {
+	static ArrayList<Location> getLocations() {
 		ArrayList<Location> ll = new ArrayList<>();
 		for (Area a: areas) {
 				ll.addAll(a.locs.locs);
@@ -37,6 +37,26 @@ public class Areas {
 				}
 			}
 		}
+	}
+
+	static int getLocationId(Object loc) {
+		ArrayList<Location> ll = getLocations();
+		for (Location l: ll) {
+			if (l.getParameter(Location.TITLE) == (String) loc) {
+				return l.id;
+			}
+		}
+		return -1;
+	}
+
+	static String getLocationById(int id) {
+		ArrayList<Location> ll = getLocations();
+		for (Location l: ll) {
+			if (l.getParameter(Location.ID) == id) {
+				return l.title;
+			}
+		}
+		return null;
 	}
 
 	int getRowNumberOf(Object obj, int col) {
@@ -85,8 +105,16 @@ public class Areas {
 		return index[index.length-1] == areas.size() + 1 - index.length ? areas.size() - 1 : index[0];
 	}
 
+	static int size() {
+		return areas.size();
+	}
 
-	public ArrayList<Area> areas = new ArrayList<>();
+	static Area get(int ind) {
+		return areas.get(ind);
+	}
+
+
+	public static ArrayList<Area> areas = new ArrayList<>();
 	private int lastId = 0;
 	public static int lastLocId = 0;
 
