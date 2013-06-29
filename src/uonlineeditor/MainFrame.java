@@ -641,7 +641,6 @@ public class MainFrame extends javax.swing.JFrame {
 			@Override
 			public int getRowCount() {
 				if(getSelectedArea() == null || getSelectedArea().locs.getSelected() == null) return 0;
-				System.out.println(getSelectedArea().locs.getSelected().ways.size());
 				return getSelectedArea().locs.getSelected().ways.size();
 			}
 
